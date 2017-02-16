@@ -1,6 +1,6 @@
 //Tester.h
 #pragma once
-#include <Core/Core.h>
+#include "CoreGame.h"
 
 class Tester {
 public:
@@ -10,5 +10,5 @@ public:
     int begin();
     void end();
 private:
-    Zenith::Core* m_core;
+    CoreGame m_game;
 };

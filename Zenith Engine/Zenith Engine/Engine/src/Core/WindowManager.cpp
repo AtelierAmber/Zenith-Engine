@@ -55,7 +55,7 @@ namespace Zenith {
         ///Setup the window
         //Set up our OpenGL context
         SDL_GLContext glContext = SDL_GL_CreateContext(m_window);
-        if (glContext == nullptr) Log::logWarning("SDL context creation error: " + std::string(SDL_GetError()));
+        if (glContext == NULL) Log::logWarning("SDL context creation error: " + std::string(SDL_GetError()));
 
         //Set up glew
         GLenum error = glewInit();
@@ -63,11 +63,17 @@ namespace Zenith {
             Log::logWarning("Glew failed to initialize: " + std::string(reinterpret_cast<const char*>(glewGetErrorString(error))));
         }
 
+        //Set the viewport
+        glViewport(0, 0, width, height);
+        
         //Check the OpenGL version
         std::printf("\n\n***   OpenGL Version: %s   ***\n\n", glGetString(GL_VERSION));
 
         //Set VSYNC
         SDL_GL_SetSwapInterval(0);
+
+        //Default background color to black
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
         // Enable alpha blend
         glEnable(GL_BLEND);
@@ -84,7 +90,7 @@ namespace Zenith {
     }
 
     void WindowManager::dispose() {
-
+        
     }
 
     void WindowManager::resizeWindow(int w, int h) {

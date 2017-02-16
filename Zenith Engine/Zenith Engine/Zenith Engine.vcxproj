@@ -69,23 +69,23 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)deps\include\;$(ProjectDir)Engine\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\include\;$(SolutionDir)Zenith Engine\Engine\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)deps\lib\;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>B:\VS2015\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)deps\include\;$(ProjectDir)Engine\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\include\;$(SolutionDir)Zenith Engine\Engine\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)deps\lib\;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>B:\VS2015\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)deps\include\;$(ProjectDir)Engine\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\include\;$(SolutionDir)Zenith Engine\Engine\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)deps\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)deps\include\;$(ProjectDir)Engine\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\include\;$(SolutionDir)Zenith Engine\Engine\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)deps\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -143,17 +143,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\src\Rendering\ModelLoader.cpp" />
+    <ClCompile Include="Engine\src\Rendering\Renderer.cpp" />
+    <ClCompile Include="Engine\src\Rendering\ShaderProgram.cpp" />
+    <ClCompile Include="Engine\src\Rendering\StaticShader.cpp" />
+    <ClCompile Include="Tester\CoreGame.cpp" />
     <ClCompile Include="Engine\src\Core\Core.cpp" />
     <ClCompile Include="Engine\src\Logging\Logger.cpp" />
-    <ClCompile Include="GameCore.cpp" />
+    <ClCompile Include="Engine\src\Interfaces\IGameCore.cpp" />
     <ClCompile Include="Tester\main.cpp" />
     <ClCompile Include="Tester\Tester.cpp" />
     <ClCompile Include="Engine\src\Core\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\include\Rendering\ModelLoader.h" />
+    <ClInclude Include="Engine\include\Rendering\RawModel.h" />
+    <ClInclude Include="Engine\include\Rendering\Renderer.h" />
+    <ClInclude Include="Engine\include\Rendering\ShaderProgram.h" />
+    <ClInclude Include="Engine\include\Rendering\StaticShader.h" />
+    <ClInclude Include="Tester\CoreGame.h" />
     <ClInclude Include="Engine\include\Core\Core.h" />
     <ClInclude Include="Engine\include\Logging\Logger.h" />
-    <ClInclude Include="GameCore.h" />
+    <ClInclude Include="Engine\include\Interfaces\IGameCore.h" />
     <ClInclude Include="Tester\Tester.h" />
     <ClInclude Include="Engine\include\Core\WindowManager.h" />
   </ItemGroup>

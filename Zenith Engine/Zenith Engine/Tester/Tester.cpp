@@ -1,8 +1,8 @@
 //Tests.cpp
 #include "Tester.h"
 
-Tester::Tester() {
-    m_core = new Zenith::Core();
+Tester::Tester() : m_game("Game", 0, 0, 1080, 720, Zenith::WindowFlag::CENTERED){
+    
 }
 
 Tester::~Tester() {
@@ -10,9 +10,9 @@ Tester::~Tester() {
 }
 
 int Tester::begin() {
-    return m_core->start("Game Tester", 100, 100, 1280, 720, Zenith::WindowFlag::CENTERED);
+    return m_game.run();
 }
 
 void Tester::end() {
-    m_core->dispose();
+    
 }

@@ -11,9 +11,6 @@ namespace Zenith {
         if (createWindow(title, x, y, width, height, flags) != 0) {
             return -2;
         }
-        while (m_gameState != GameState::EXIT) {
-            processInput();
-        }
         return 0;
     }
 
@@ -38,24 +35,6 @@ namespace Zenith {
 
     int Core::createWindow(const char* title, int x, int y, int width, int height, Uint32 flags) {
         return m_windowManager.createWindow(title, x, y, width, height, flags);
-    }
-
-    void Core::processInput() {
-        SDL_Event evnt;
-        while (SDL_PollEvent(&evnt)) {
-            switch (evnt.type) {
-            case SDL_QUIT:
-                m_gameState = GameState::EXIT;
-                break;
-            case SDL_MOUSEMOTION:
-                evnt.motion.x;
-                evnt.motion.y;
-                break;
-            default:
-                
-                break;
-            }
-        }
     }
 
     void Core::dispose() {
