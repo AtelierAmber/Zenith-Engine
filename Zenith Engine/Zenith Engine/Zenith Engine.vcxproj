@@ -143,10 +143,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\src\Rendering\loadpng.cpp" />
     <ClCompile Include="Engine\src\Rendering\ModelLoader.cpp" />
     <ClCompile Include="Engine\src\Rendering\Renderer.cpp" />
     <ClCompile Include="Engine\src\Rendering\ShaderProgram.cpp" />
     <ClCompile Include="Engine\src\Rendering\StaticShader.cpp" />
+    <ClCompile Include="Engine\src\Rendering\TexturedModel.cpp" />
     <ClCompile Include="Tester\CoreGame.cpp" />
     <ClCompile Include="Engine\src\Core\Core.cpp" />
     <ClCompile Include="Engine\src\Logging\Logger.cpp" />
@@ -156,11 +158,13 @@
     <ClCompile Include="Engine\src\Core\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\include\Rendering\loadpng.h" />
     <ClInclude Include="Engine\include\Rendering\ModelLoader.h" />
     <ClInclude Include="Engine\include\Rendering\RawModel.h" />
     <ClInclude Include="Engine\include\Rendering\Renderer.h" />
     <ClInclude Include="Engine\include\Rendering\ShaderProgram.h" />
     <ClInclude Include="Engine\include\Rendering\StaticShader.h" />
+    <ClInclude Include="Engine\include\Rendering\TexturedModel.h" />
     <ClInclude Include="Tester\CoreGame.h" />
     <ClInclude Include="Engine\include\Core\Core.h" />
     <ClInclude Include="Engine\include\Logging\Logger.h" />
