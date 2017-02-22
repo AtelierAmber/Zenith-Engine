@@ -17,8 +17,6 @@ namespace Zenith {
             return (index < m_programs.size()) ? m_programs[index] : nullptr; 
         }
 
-        void construct();
-
         void useProgram(unsigned int index);
 
         void endProgram(unsigned int index);

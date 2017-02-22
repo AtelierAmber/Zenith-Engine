@@ -171,9 +171,12 @@
     <ClInclude Include="IShaderProgram.h" />
     <ClInclude Include="KeyCode.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="RenderBatch.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="Zenith.h" />
   </ItemGroup>
@@ -183,6 +186,7 @@
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="IShaderProgram.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="RenderBatch.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShaderManager.cpp" />

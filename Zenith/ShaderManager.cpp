@@ -2,6 +2,8 @@
 
 #include "IShaderProgram.h"
 
+#include <iostream>
+
 namespace Zenith {
     ShaderManager::ShaderManager() {
         m_logger.construct("render.log", "SHDR");
@@ -11,23 +13,23 @@ namespace Zenith {
 
     unsigned int ShaderManager::addProgram(IShaderProgram* program) {
         program->construct();
-        program->compile();
+        program->link();
         m_programs.push_back(program);
         return m_programs.size()-1;
     }
 
-    void ShaderManager::construct() {
-        for () {
-
-        }
-    }
-
     void ShaderManager::useProgram(unsigned int index) {
-
+        if (index < m_programs.size()) {
+            m_programs[index]->use();
+        }
+        else std::cerr << "Trying to use shader index " << index << " that has not been added!";
     }
 
     void ShaderManager::endProgram(unsigned int index) {
-
+        if (index < m_programs.size()) {
+            m_programs[index]->end();
+        }
+        else std::cerr << "Trying to use shader index " << index << " that has not been added!";
     }
 
     void ShaderManager::dispose() {

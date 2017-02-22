@@ -84,7 +84,7 @@ namespace Zenith {
         glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
     }
 
-    int IShaderProgram::compile() {
+    int IShaderProgram::link() {
         bindAttributes();
         m_id = glCreateProgram();
         if (m_vertexID) {

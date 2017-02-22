@@ -37,6 +37,12 @@
     <Filter Include="Header Files\Scenes">
       <UniqueIdentifier>{037f8d64-081d-4a2f-b687-78c76a21591a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scenes\Rendering">
+      <UniqueIdentifier>{7d560dff-ff43-406a-949d-98dab7dbdd0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\Rendering">
+      <UniqueIdentifier>{315b1adb-9baa-48f9-906d-e7dfcd8a1a25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zenith.h">
@@ -63,14 +69,23 @@
     <ClInclude Include="IScene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="ShaderManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="IShaderProgram.h">
       <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\Scenes\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderBatch.h">
+      <Filter>Header Files\Scenes\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files\Scenes\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files\Scenes\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -95,14 +110,17 @@
     <ClCompile Include="IScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="ShaderManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="IShaderProgram.cpp">
       <Filter>Source Files\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderBatch.cpp">
+      <Filter>Source Files\Scenes\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\Scenes\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

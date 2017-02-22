@@ -5,6 +5,7 @@
 namespace Zenith {
     Renderer::Renderer() {
         m_logger.construct("render.log", "RNDR");
+        m_batch.begin();
     }
 
     Renderer::~Renderer() {}
@@ -26,10 +27,11 @@ namespace Zenith {
     void Renderer::begin() {
         glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     }
 
-    void Renderer::render(/*@ params*/) {
-
+    void Renderer::render(unsigned int shader, const Model& model) {
+        m_models[shader].push_back(model);
     }
 
     void Renderer::end() {

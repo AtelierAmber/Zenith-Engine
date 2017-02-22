@@ -31,7 +31,7 @@ namespace Zenith {
 
     private:
 
-        int compile();
+        int link();
 
         void dispose();
 
@@ -40,8 +40,9 @@ namespace Zenith {
 
         Logger* m_shaderLog = nullptr;
 
+        unsigned int m_vao = 0;
         unsigned int m_numAttribs = 0;
-        unsigned int m_id;
+        unsigned int m_id = 0;
         unsigned int m_vertexID = 0;
         unsigned int m_fragmentID = 0;
     };
