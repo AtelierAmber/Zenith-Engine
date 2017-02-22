@@ -1,2 +1,0 @@
-#include "Rendering/TexturedModel.h"
-
