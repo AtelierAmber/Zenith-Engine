@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Scenes\Rendering">
       <UniqueIdentifier>{315b1adb-9baa-48f9-906d-e7dfcd8a1a25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scenes\Rendering\Models">
+      <UniqueIdentifier>{2ed463b6-4fd6-4a17-8aac-820ac00ec23e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\Rendering\Models">
+      <UniqueIdentifier>{d251a322-026d-40ed-8641-b28f00dc03ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zenith.h">
@@ -85,7 +91,16 @@
       <Filter>Header Files\Scenes\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>Header Files\Scenes\Rendering</Filter>
+      <Filter>Header Files\Scenes\Rendering\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="loadpng.h">
+      <Filter>Header Files\Scenes\Rendering\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoader.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera3D.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +136,15 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\Scenes\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="loadpng.cpp">
+      <Filter>Source Files\Scenes\Rendering\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLoader.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera3D.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

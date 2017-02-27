@@ -1,5 +1,8 @@
 #pragma once
 #include <IScene.h>
+#include <Model.h>
+
+#include "StaticShader.h"
 
 class Scene :
     public Zenith::IScene {
@@ -20,6 +23,9 @@ public:
     void destroy() override;
 
 private:
+    float m_ticker = 0.0f;
 
+    unsigned int m_shader;
+    Zenith::Model m_model;
 };
 

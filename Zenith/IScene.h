@@ -1,5 +1,6 @@
 #pragma once
 #include "Renderer.h"
+#include "DataLoader.h"
 
 namespace Zenith {
     class IGame;
@@ -44,6 +45,7 @@ namespace Zenith {
         void setNext(unsigned int next) { m_nextScene = next; }
 
         Logger m_logger;
+        DataLoader m_dataLoader;
 
         Renderer m_renderer;
         IGame* m_game = nullptr;

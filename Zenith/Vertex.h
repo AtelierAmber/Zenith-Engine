@@ -5,7 +5,7 @@ namespace Zenith {
     struct Position {
         Position() : x(0.0f), y(0.0f), z(0.0f) {}
         Position(const Position& pos) : x(pos.x), y(pos.y), z(pos.z) {}
-        Position(float X, float Y, float Z) : x(X), y(Y), z(Z) { }
+        Position(const float& X, const float& Y, const float& Z) : x(X), y(Y), z(Z) { }
         float x;
         float y;
         float z;
@@ -15,7 +15,7 @@ namespace Zenith {
         //Constructors
         ColorRGBA8() : r(0), g(0), b(0), a(255) { }
         ColorRGBA8(const ColorRGBA8& col) : r(col.r), g(col.g), b(col.b), a(col.a) {}
-        ColorRGBA8(GLubyte R, GLubyte G, GLubyte B, GLubyte A) : r(R), g(G), b(B), a(A) { }
+        ColorRGBA8(const GLubyte& R, const GLubyte& G, const GLubyte& B, const GLubyte& A) : r(R), g(G), b(B), a(A) { }
 
         GLubyte r;
         GLubyte g;
@@ -24,40 +24,56 @@ namespace Zenith {
     };
 
     struct UV {
+        UV() : u(0.0f), v(0.0f) {}
         UV(const UV& uv) : u(uv.u), v(uv.v) {}
-        UV(float U, float V) : u(U), v(V) { }
+        UV(const float& U, const float& V) : u(U), v(V) { }
         float u;
         float v;
+    };
+
+    struct Normal {
+        Normal() : nx(0.0f), ny(0.0f), nz(0.0f) {}
+        Normal(const Normal& nor) : nx(nor.nx), ny(nor.ny), nz(nor.nz) {}
+        Normal(const float& NX, const float& NY, const float& NZ) : nx(NX), ny(NY), nz(NZ) { }
+        float nx;
+        float ny;
+        float nz;
     };
 
     //The vertex definition
     struct Vertex {
         //Base constructors
-        Vertex() : position(0.0f, 0.0f, 0.0f), color(), uv(0, 0) { }
-        Vertex(Position pos, ColorRGBA8 Color, UV Uv) : 
-            position(pos), color(Color), uv(Uv) { }
-        Vertex(float x, float y, float z, ColorRGBA8 Color, UV Uv) : 
+        Vertex() : position(), color(), uv(), normal() { }
+        Vertex(const Position& pos, const ColorRGBA8& Color, const UV& Uv, const Normal& nor) : 
+            position(pos), color(Color), uv(Uv), normal(nor) { }
+        Vertex(const float& x, float& y, float& z, const ColorRGBA8& Color, const UV& Uv, const Normal& nor) : 
             position(x, y, z), color(Color), uv(Uv) { }
-        Vertex(float x, float y, float z, GLubyte r, GLubyte g, GLubyte b, GLubyte a, UV Uv) : 
+        Vertex(const float& x, const float& y, const float& z, const GLubyte& r, 
+            const GLubyte& g, const GLubyte& b, const GLubyte& a, const UV& Uv, const Normal& nor) : 
             position(x, y, z), color(r, g, b, a), uv(Uv) { }
-        Vertex(float x, float y, float z, GLubyte r, GLubyte g, GLubyte b, GLubyte a, float u, float v) :
+        Vertex(const float& x, const float& y, const float& z, const GLubyte& r, 
+            const GLubyte& g, const GLubyte& b, const GLubyte& a, const float& u, 
+            const float& v, const Normal& nor) :
             position(x, y, z), color(r, g, b, a), uv(u, v) { }
+        Vertex(const float& x, const float& y, const float& z, const GLubyte& r,
+            const GLubyte& g, const GLubyte& b, const GLubyte& a, const float& u, 
+            const float& v, const float& nx, const float& ny, const float& nz) :
+            position(x, y, z), color(r, g, b, a), uv(u, v), normal(nx, ny, nz){ }
 
-        //This is the position struct. When you store a struct or class
-        //inside of another struct or class, it is called composition. This is
-        //layed out exactly the same in memory as if we had a float position[2],
-        //but doing it this way makes more sense.
         Position position;
 
-        //4 bytes for r g b a color.
+        /* 4 bytes for r g b a color. */
         ColorRGBA8 color;
 
-        //UV texture coordinates.
+        /* UV texture coordinates. */
         UV uv;
 
-        void setPosition(float x, float y) {
+        Normal normal;
+
+        void setPosition(float x, float y, float z) {
             position.x = x;
             position.y = y;
+            position.z = z;
         }
 
         void setColor(GLubyte r, GLubyte g, GLubyte b, GLubyte a) {
@@ -70,6 +86,12 @@ namespace Zenith {
         void setUV(float u, float v) {
             uv.u = u;
             uv.v = v;
+        }
+
+        void setNormal(float nx, float ny, float nz) {
+            normal.nx = nx;
+            normal.ny = ny;
+            normal.nz = nz;
         }
     };
 

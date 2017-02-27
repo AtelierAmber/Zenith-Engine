@@ -11,7 +11,8 @@ namespace Zenith {
         ShaderManager();
         ~ShaderManager();
 
-        unsigned int addProgram(IShaderProgram* program);
+        void construct(Logger* logger);
+        unsigned int addProgram(IShaderProgram* program, const unsigned int& vbo, const unsigned int& ebo);
 
         IShaderProgram* getProgram(unsigned int index) { 
             return (index < m_programs.size()) ? m_programs[index] : nullptr; 
@@ -25,6 +26,6 @@ namespace Zenith {
 
     private:
         std::vector<IShaderProgram*> m_programs;
-        Logger m_logger;
+        Logger* m_logger;
     };
 }

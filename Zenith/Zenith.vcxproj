@@ -165,11 +165,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera3D.h" />
+    <ClInclude Include="DataLoader.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="IShaderProgram.h" />
     <ClInclude Include="KeyCode.h" />
+    <ClInclude Include="loadpng.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="RenderBatch.h" />
@@ -181,10 +184,13 @@
     <ClInclude Include="Zenith.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera3D.cpp" />
+    <ClCompile Include="DataLoader.cpp" />
     <ClCompile Include="IGame.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="IShaderProgram.cpp" />
+    <ClCompile Include="loadpng.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="RenderBatch.cpp" />
     <ClCompile Include="Renderer.cpp" />

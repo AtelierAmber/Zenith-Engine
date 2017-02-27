@@ -4,7 +4,7 @@
 
 namespace Zenith {
     WindowManager::WindowManager() {
-        m_windowLog.construct("system.log", "Window Manager");
+        m_windowLog.construct("system.log", "WNDW");
     }
 
     WindowManager::~WindowManager() {}
@@ -21,20 +21,20 @@ namespace Zenith {
     int WindowManager::createWindow(const char* title, int x, int y, unsigned int width, unsigned int height, unsigned int windowFlags) {
         //Get display settings
         if (SDL_GetDesktopDisplayMode(0, &m_displayInfo) != 0) {
-            m_windowLog.log(LogType::WARNING, "SDL error while getting display info: " + std::string(SDL_GetError()));
+            m_windowLog.log("WNDW", LogType::WARNING, "SDL error while getting display info: " + std::string(SDL_GetError()));
         }
-        else m_windowLog.log(LogType::EVENT, "Desktop info successfully acquired");
+        else m_windowLog.log("WNDW", LogType::EVENT, "Desktop info successfully acquired");
 
         ///Set Window flags
         Uint32 flags =
             SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_SHOWN;
         if (windowFlags & WindowFlag::INVISIBLE) {
             flags |= SDL_WINDOW_HIDDEN;
-            m_windowLog.log(LogType::EVENT, "Window set to invisible");
+            m_windowLog.log("WNDW", LogType::EVENT, "Window set to invisible");
         }
         if (windowFlags & WindowFlag::FULLSCREEN) {
             flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-            m_windowLog.log(LogType::EVENT, "Window set to fullscreen");
+            m_windowLog.log("WNDW", LogType::EVENT, "Window set to fullscreen");
             m_winHeight = m_displayInfo.h;
             m_winWidth = m_displayInfo.w;
         }
@@ -44,13 +44,13 @@ namespace Zenith {
         }
         if (windowFlags & WindowFlag::BORDERLESS) {
             flags |= SDL_WINDOW_BORDERLESS;
-            m_windowLog.log(LogType::EVENT, "Window set to borderless");
+            m_windowLog.log("WNDW", LogType::EVENT, "Window set to borderless");
         }
 
         ///Create window
         m_window = SDL_CreateWindow(title, x, y, width, height, flags);
         if (m_window == nullptr) {
-            m_windowLog.log(LogType::ERROR, "SDL error while creating the window: " + std::string(SDL_GetError()));
+            m_windowLog.log("WNDW", LogType::ERROR, "SDL error while creating the window: " + std::string(SDL_GetError()));
             return -1;
         }
         if (windowFlags & WindowFlag::CENTERED) {
@@ -61,13 +61,13 @@ namespace Zenith {
         //Set up our OpenGL context
         SDL_GLContext glContext = SDL_GL_CreateContext(m_window);
         if (glContext == NULL) {
-            m_windowLog.log(LogType::WARNING, "SDL context creation error: " + std::string(SDL_GetError()));
+            m_windowLog.log("WNDW", LogType::WARNING, "SDL context creation error: " + std::string(SDL_GetError()));
         }
 
         //Set up glew
         GLenum error = glewInit();
         if (error != GLEW_OK) {
-            m_windowLog.log(LogType::WARNING, "Glew failed to initialize: " + std::string(reinterpret_cast<const char*>(glewGetErrorString(error))));
+            m_windowLog.log("WNDW", LogType::WARNING, "Glew failed to initialize: " + std::string(reinterpret_cast<const char*>(glewGetErrorString(error))));
         }
 
         //Set the viewport
@@ -83,7 +83,7 @@ namespace Zenith {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        m_windowLog.log(LogType::EVENT, "Window successfully created\n***   OpenGL Version: " + 
+        m_windowLog.log("WNDW", LogType::EVENT, "Window successfully created\n***   OpenGL Version: " + 
                         std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))) + "   ***");
 
         return 0;
