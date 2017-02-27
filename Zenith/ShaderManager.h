@@ -3,6 +3,7 @@
 #include "Logger.h"
 
 #include <vector>
+#include <iostream>
 
 namespace Zenith {
     class IShaderProgram;
@@ -14,7 +15,7 @@ namespace Zenith {
         void construct(Logger* logger);
         unsigned int addProgram(IShaderProgram* program, const unsigned int& vbo, const unsigned int& ebo);
 
-        IShaderProgram* getProgram(unsigned int index) { 
+        IShaderProgram* getProgram(unsigned int index) {
             return (index < m_programs.size()) ? m_programs[index] : nullptr; 
         }
 

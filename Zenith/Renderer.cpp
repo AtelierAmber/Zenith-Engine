@@ -47,11 +47,11 @@ namespace Zenith {
             /* For each VAO (map.first) render a new batch */
             m_batch.begin();
             for (unsigned int i = 0; i < m_models[batch.first].size(); ++i) {
-                m_shaderManager.getProgram(batch.first)->loadTransform(m_models[batch.first][i].transform);
                 m_batch.add(&m_models[batch.first][i]);
             }
+            m_shaderManager.getProgram(batch.first)->loadProjection(*m_viewMatrix);
             m_batch.end();
-            m_batch.renderBatch();
+            m_batch.renderBatch(m_shaderManager.getProgram(batch.first));
             m_shaderManager.endProgram(batch.first);
         }
     }

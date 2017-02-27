@@ -1,6 +1,7 @@
 #include "RenderBatch.h"
 #include "Model.h"
 #include "Logger.h"
+#include "IShaderProgram.h"
 
 #include <algorithm>
 #include <iostream>
@@ -51,14 +52,15 @@ namespace Zenith {
 
         //Add all the rest of the glyphs
         for (std::size_t c = 0; c < m_modelPointers.size(); ++c) {
-            m_renderBatches.emplace_back(offset, m_modelPointers[0]->model->getNumIndicies(), m_modelPointers[0]->model->getTexture(), m_modelPointers[0]->depth);
-            for (auto& vert : m_modelPointers[0]->model->getVertices()) {
+            m_renderBatches.emplace_back(offset, m_modelPointers[c]->model->getNumIndicies(), 
+                m_modelPointers[c]->model->getTexture(), m_modelPointers[c]->depth, m_modelPointers[c]->transform);
+            for (auto& vert : m_modelPointers[c]->model->getVertices()) {
                 vertices.push_back(vert);
             }
-            for (auto& ind : m_modelPointers[0]->model->getIndicies()) {
+            for (auto& ind : m_modelPointers[c]->model->getIndicies()) {
                 indicies.push_back(ind);
             }
-            offset += m_modelPointers[0]->model->getNumIndicies();
+            offset += m_modelPointers[c]->model->getNumVerticies();
         }
 
         /* Bind VBO for use */
@@ -86,7 +88,7 @@ namespace Zenith {
         }
     }
 
-    void RenderBatch::renderBatch() {
+    void RenderBatch::renderBatch(IShaderProgram* shader) {
         if ( m_renderBatches.empty()) {
             return;
         }
@@ -99,6 +101,7 @@ namespace Zenith {
             if (m_renderBatches[i].textureID) {
                 glBindTexture(GL_TEXTURE_2D, m_renderBatches[i].textureID);
             }
+            shader->loadTransform(m_renderBatches[i].transform);
             glDrawElementsBaseVertex(GL_TRIANGLES, m_renderBatches[i].numIndicies, 
                 GL_UNSIGNED_SHORT, 0, m_renderBatches[i].indexOffset);
             glBindTexture(GL_TEXTURE_2D, 0);

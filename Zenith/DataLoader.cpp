@@ -53,7 +53,7 @@ namespace Zenith{
             /* Flip the image to comply with opengl coordinate system */
             std::vector<unsigned char> correctedImage;
             for (int i = (int)image.size(); i > 0; i -= (width*4)) {
-                for (int j = 0; j < width * 4; ++j) {
+                for (unsigned int j = 0; j < width * 4; ++j) {
                     correctedImage.push_back(image[(i-(width*4))+j]);
                 }
             }

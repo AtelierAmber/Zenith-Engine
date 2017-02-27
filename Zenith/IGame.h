@@ -13,6 +13,8 @@ namespace Zenith {
         /* Initialize and start the game */
         int start(const char* title = "Zenith Game", int x = 0, int y = 0, unsigned int width = 1280, unsigned int height = 720, unsigned int windowFlags = 0);
 
+        const WindowManager* getWindowManager() const { return &m_windowManager; }
+
     protected:
         /* Called on game start
          * Used for scene independent variables */

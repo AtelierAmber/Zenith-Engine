@@ -6,6 +6,7 @@
 namespace Zenith {
     class Logger;
     class Model;
+    class IShaderProgram;
     struct DepthModel {
         DepthModel(float Depth, glm::mat4 Transform, Model* modelPoint) : depth(Depth), model(modelPoint), transform(Transform) {}
         float depth;
@@ -14,8 +15,11 @@ namespace Zenith {
     };
 
     struct Mesh {
-        Mesh(unsigned int offset, unsigned int NumIndicies, unsigned int texture, float Depth) :
-            indexOffset(offset), numIndicies(NumIndicies), textureID(texture), depth(Depth){}
+        Mesh(unsigned int offset, unsigned int NumIndicies, unsigned int texture, 
+            float Depth, glm::mat4 Transform) :
+            indexOffset(offset), numIndicies(NumIndicies), textureID(texture), 
+            depth(Depth), transform(Transform) {}
+        glm::mat4 transform;
         unsigned int indexOffset;
         unsigned int numIndicies;
         unsigned int textureID;
@@ -34,7 +38,7 @@ namespace Zenith {
 
         void end();
 
-        void renderBatch();
+        void renderBatch(IShaderProgram* shader);
 
         void dispose();
 

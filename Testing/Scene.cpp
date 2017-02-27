@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Game.h"
 
 #include <GL/glew.h>
 
@@ -8,6 +9,10 @@ Scene::~Scene() {}
 
 void Scene::build() {
     m_shader = m_renderer.addShader(new StaticShader());
+    m_camera.init(m_game->getWindowManager()->getWidth(), m_game->getWindowManager()->getHeight());
+    m_renderer.registerView(m_camera.getMatrix());
+
+    /* TESTING */
     std::vector<Zenith::Vertex> vertexes;
     const Zenith::Texture* texture = m_dataLoader.loadImage("assets/wall.png", Zenith::TEX_CLAMP | Zenith::TEX_FILTER_MIPMAP);
     unsigned int id = 0;
@@ -27,7 +32,7 @@ void Scene::build() {
         Zenith::Vertex(-0.5f,  0.5f,  0.0f, 255, 255, 255, 255, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f), //1 TL
         Zenith::Vertex( 0.5f,  0.5f,  0.0f, 255, 255, 255, 255, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f), //2 TR
         Zenith::Vertex( 0.5f, -0.5f,  0.0f, 255, 255, 255, 255, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f), //3 BR
-        Zenith::Vertex( 0.0f,  0.0f,  0.5f, 255, 255, 255, 255, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f)  //4 E
+        Zenith::Vertex( 0.0f,  0.0f,  0.5f, 255, 255, 255, 255, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f)  //4 E
     }, id);
 }
 
@@ -36,11 +41,13 @@ void Scene::enter() {
 }
 
 void Scene::render() {
-    m_renderer.render(m_shader, &m_model, 0, 0.0f, 0.5f, 0.0f, 0.0f, m_ticker, 0.0f, 1.0f);
+    m_renderer.render(m_shader, &m_model, 0, 0.0f, 0.0f, -3.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+    m_renderer.render(m_shader, &m_model, 0, 1.0f, 1.0f, -2.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void Scene::update() {
-    m_ticker += 0.005f;
+    m_camera.update();
+    m_ticker += 0.05f;
 }
 
 void Scene::exit() {

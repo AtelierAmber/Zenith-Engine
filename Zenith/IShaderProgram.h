@@ -16,13 +16,16 @@ namespace Zenith {
         const unsigned int getVAO() { return m_vao; }
 
         void loadTransform(const glm::mat4& mat);
+        void loadProjection(const glm::mat4& mat);
 
     protected:
         /* Use to load shader files 
          * Construct must include: 
-         * loadShader calls */
+         * loadShader calls
+         * single call to both setTransform and setProjection */
         virtual void construct() = 0;
         void setTransform(const char* name);
+        void setProjection(const char* name);
         /* Can be overloaded if a custom Vertex type is needed */
         virtual void setupVAO(const unsigned int& vbo, const unsigned int& ebo);
         void setVertexAttribute(unsigned int attribNum, int numComponents, 
@@ -53,6 +56,7 @@ namespace Zenith {
         Logger* m_shaderLog = nullptr;
 
         const char* m_transformLoc;
+        const char* m_projectionLoc;
         unsigned int m_vao = 0;
         unsigned int m_numAttribs = 0;
         unsigned int m_id = 0;

@@ -40,6 +40,8 @@ namespace Zenith {
         /* Cleans up shaders and rendering */
         void dispose();
 
+        void registerView(glm::mat4* matrix) { m_viewMatrix = matrix; }
+
     private:
         glm::mat4 generateTransformMatrix(float x, float y, float z, float rotx,
             float roty, float rotz, float scale) const {
@@ -47,6 +49,7 @@ namespace Zenith {
         }
         glm::mat4 generateTransformMatrix(glm::vec3 position, glm::vec3 rotation, float scale) const;
 
+        glm::mat4* m_viewMatrix;
         /* Use map to map shader index to vector of models to render */
         unsigned int m_currentShader = 0;
         std::unordered_map<unsigned int, std::vector<DepthModel>> m_models;

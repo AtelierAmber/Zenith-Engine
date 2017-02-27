@@ -21,6 +21,7 @@ namespace Zenith{
         unsigned short* getIndicieRef() { return &m_indicies[0]; }
         Vertex* getVerticieRef() { return &m_vertices[0]; }
         unsigned int getNumIndicies() { return (unsigned int)m_indicies.size(); }
+        unsigned int getNumVerticies() { return (unsigned int)m_vertices.size(); }
 
         const unsigned int& getTexture() { return m_textureID; }
         const std::vector<unsigned short>& getIndicies() { return m_indicies; }

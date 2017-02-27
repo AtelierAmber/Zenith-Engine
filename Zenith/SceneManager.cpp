@@ -36,8 +36,8 @@ namespace Zenith {
         scene->m_sceneIndex = (unsigned int)m_scenes.size();
         if ((int)m_scenes.size() == 0) m_currentScene = 0;
         m_scenes.push_back(scene);
-        scene->build();
         scene->setGame(m_game);
+        scene->build();
         return scene->m_sceneIndex;
     }
 

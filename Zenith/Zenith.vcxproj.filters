@@ -100,7 +100,7 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Camera3D.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +144,7 @@
       <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="Camera3D.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

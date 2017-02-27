@@ -5,7 +5,7 @@ namespace Zenith {
         m_logger.construct("scene.log", "SCEN");
     }
 
-    IScene::IScene(IGame* game) {
+    IScene::IScene(IGame* const game) {
         setGame(game);
         m_logger.construct("scene.log", "SCEN");
     }

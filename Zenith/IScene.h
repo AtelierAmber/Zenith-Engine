@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderer.h"
 #include "DataLoader.h"
+#include "Camera3D.h"
 
 namespace Zenith {
     class IGame;
@@ -17,7 +18,7 @@ namespace Zenith {
         friend class SceneManager;
         IScene();
         IScene(IGame* game);
-        ~IScene();
+        virtual ~IScene();
 
         /* Called when added to SceneManager */
         virtual void build() = 0;
@@ -46,6 +47,7 @@ namespace Zenith {
 
         Logger m_logger;
         DataLoader m_dataLoader;
+        Camera3D m_camera;
 
         Renderer m_renderer;
         IGame* m_game = nullptr;

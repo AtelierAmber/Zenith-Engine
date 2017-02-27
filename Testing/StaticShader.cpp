@@ -14,6 +14,7 @@ void StaticShader::construct() {
     loadShader("./shaders/static.vert", GL_VERTEX_SHADER);
     loadShader("./shaders/static.frag", GL_FRAGMENT_SHADER);
     setTransform("transform");
+    setProjection("projection");
 }
 
 void StaticShader::bindAttributes() {

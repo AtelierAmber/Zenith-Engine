@@ -29,8 +29,8 @@ namespace Zenith {
 
         SDL_Window* getContext() const { return m_window; }
         const SDL_DisplayMode& getDisplay() const { return m_displayInfo; }
-        unsigned int getHeight() { return m_winHeight; }
-        unsigned int getWidth() { return m_winWidth; }
+        unsigned int getHeight() const { return m_winHeight; }
+        unsigned int getWidth() const { return m_winWidth; }
 
     private:
         void centerWindow();

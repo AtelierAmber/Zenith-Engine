@@ -21,12 +21,20 @@ namespace Zenith {
 
     void IShaderProgram::loadTransform(const glm::mat4& mat) {
         if (m_transformLoc != 0) {
-            glUniformMatrix4fv(glGetUniformLocation(m_id, m_transformLoc), 1, GL_FALSE, &mat[0][0]);
+            glUniformMatrix4fv(getUniformLocation(m_transformLoc), 1, GL_FALSE, &mat[0][0]);
+        }
+    }
+    void IShaderProgram::loadProjection(const glm::mat4& mat) {
+        if (m_transformLoc != 0) {
+            glUniformMatrix4fv(getUniformLocation(m_projectionLoc), 1, GL_FALSE, &mat[0][0]);
         }
     }
 
     void IShaderProgram::setTransform(const char* name) {
         m_transformLoc = name;
+    }
+    void IShaderProgram::setProjection(const char* name) {
+        m_projectionLoc = name;
     }
 
     void IShaderProgram::setupVAO(const unsigned int& vbo, const unsigned int& ebo) {
