@@ -1,5 +1,6 @@
 #include "DataLoader.h"
 #include "loadpng.h"
+#include <fstream>
 
 #include <GL/glew.h>
 
@@ -102,6 +103,21 @@ namespace Zenith{
             }
             glBindTexture(GL_TEXTURE_2D, 0);
             return (m_texCache.add(fileName, id, width, height));
+        }
+    }
+
+    Zenith::Model DataLoader::loadOBJ(const char* fileName, ImageFlag flags /*= NO_FLAGS*/) {
+        Model newModel;
+        std::fstream file;
+        file.open(fileName);
+        if (file.fail()) {
+            m_logger.log("LOAD", LogType::ERROR, "Could not load file " + std::string(fileName) + "!!");
+            return newModel;
+        }
+        
+        std::string line;
+        while (std::getline(file, line)) {
+            
         }
     }
 }

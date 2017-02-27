@@ -23,16 +23,27 @@ void Scene::build() {
     m_model = Zenith::Model({ 
         0, 1, 2,
         2, 3, 0,
-        0, 4, 1,
-        1, 4, 2,
-        2, 4, 3,
-        0, 4, 3
+        4, 5, 6,
+        6, 7, 4,
+
+        0, 4, 5,
+        0, 1, 5,
+        1, 5, 6,
+        1, 2, 6,
+        2, 6, 7,
+        2, 3, 7,
+        3, 7, 0,
+        0, 4, 7
     }, {
         Zenith::Vertex(-0.5f, -0.5f,  0.0f, 255, 255, 255, 255, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f), //0 BL
         Zenith::Vertex(-0.5f,  0.5f,  0.0f, 255, 255, 255, 255, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f), //1 TL
         Zenith::Vertex( 0.5f,  0.5f,  0.0f, 255, 255, 255, 255, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f), //2 TR
         Zenith::Vertex( 0.5f, -0.5f,  0.0f, 255, 255, 255, 255, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f), //3 BR
-        Zenith::Vertex( 0.0f,  0.0f,  0.5f, 255, 255, 255, 255, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f)  //4 E
+
+        Zenith::Vertex(-0.5f, -0.5f,  1.0f, 255, 255, 255, 255, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f), //0 BBL
+        Zenith::Vertex(-0.5f,  0.5f,  1.0f, 255, 255, 255, 255, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f), //1 BTL
+        Zenith::Vertex( 0.5f,  0.5f,  1.0f, 255, 255, 255, 255, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f), //2 BTR
+        Zenith::Vertex( 0.5f, -0.5f,  1.0f, 255, 255, 255, 255, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f) //3 BBR
     }, id);
 }
 
@@ -41,13 +52,13 @@ void Scene::enter() {
 }
 
 void Scene::render() {
-    m_renderer.render(m_shader, &m_model, 0, 0.0f, 0.0f, -3.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-    m_renderer.render(m_shader, &m_model, 0, 1.0f, 1.0f, -2.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+    m_renderer.render(m_shader, &m_model, 0, 0.0f, 0.0f, -3.0f, -m_ticker, 0.0f, m_ticker, 1.0f);
+    m_renderer.render(m_shader, &m_model, 0, 1.5f, 1.0f, -3.0f, m_ticker, 0.0f, -m_ticker, 1.0f);
 }
 
 void Scene::update() {
     m_camera.update();
-    m_ticker += 0.05f;
+    m_ticker += 0.5f;
 }
 
 void Scene::exit() {

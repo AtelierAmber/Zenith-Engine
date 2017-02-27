@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include "Logger.h"
+#include "Model.h"
 
 namespace Zenith {
     struct Texture {
@@ -43,8 +44,10 @@ namespace Zenith {
         DataLoader();
         ~DataLoader();
 
-        const Texture* loadImage(const char* fileName, ImageFlag flags = DataFlag::NO_FLAGS);
+        const Texture* loadImage(const char* fileName, ImageFlag flags = NO_FLAGS);
         ///unsigned int loadVolume();
+        Model loadOBJ(const char* fileName, ImageFlag flags = NO_FLAGS);
+
     private:
         Logger m_logger;
         TextureCache m_texCache;
