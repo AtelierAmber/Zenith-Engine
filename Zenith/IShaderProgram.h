@@ -3,13 +3,33 @@
 #include "Logger.h"
 
 #include <glm/glm.hpp>
+#include <vector>
 
 namespace Zenith {
+
+    enum class UniformType {
+        UNIFORM_INT,
+        UNIFORM_FLOAT,
+        UNIFORM_VEC,
+        UNIFORM_BOOL,
+        UNIFORM_MAT
+    };
+
+    struct GLUniform {
+        GLUniform(const char* Name, void* Value_ptr, UniformType Type) : 
+            name(Name), value_ptr(Value_ptr), type(Type) {}
+        GLUniform(int Location, void* Value_ptr, UniformType Type) :
+            location(Location), type(Type) {}
+        const char* name;
+        int location;
+        UniformType type;
+        void* value_ptr = nullptr;
+    };
 
     class IShaderProgram {
     friend class ShaderManager;
     public:
-        IShaderProgram();
+        IShaderProgram(bool hasMaterial, bool hasTexture);
         ~IShaderProgram();
 
         void reload();
@@ -18,11 +38,15 @@ namespace Zenith {
         void loadTransform(const glm::mat4& mat);
         void loadProjection(const glm::mat4& mat);
 
+        bool isMaterialShader() { return m_material; }
+        bool isTextureShader() { return m_texture; }
+
     protected:
         /* Use to load shader files 
          * Construct must include: 
          * loadShader calls
-         * single call to both setTransform and setProjection */
+         * single call to both setTransform and setProjection 
+         * and calls to adding uniforms*/
         virtual void construct() = 0;
         void setTransform(const char* name);
         void setProjection(const char* name);
@@ -36,7 +60,10 @@ namespace Zenith {
         virtual void bindAttributes() = 0;
         void bindAttribute(int index, const char* name);
 
-        virtual void loadUniforms() = 0;
+        unsigned int addUniform(const char* name, void* value_ptr, UniformType type);
+        void editUniform(unsigned int uniformIndex, void* newValue_ptr, UniformType type);
+        void loadUniforms();
+        virtual void loadStaticUniforms() = 0;
 
         int getUniformLocation(const char* name);
         void loadIntU(int location, int value) const;
@@ -46,6 +73,9 @@ namespace Zenith {
         void loadMatU(int location, glm::mat4 mat) const;
 
     private:
+
+        void updateUniforms();
+
         void link();
 
         void dispose();
@@ -53,7 +83,12 @@ namespace Zenith {
         void use();
         void end();
 
+        bool m_material, m_texture;
+
         Logger* m_shaderLog = nullptr;
+
+        bool m_uniformsUpdated = false;
+        std::vector<GLUniform> m_uniforms;
 
         const char* m_transformLoc;
         const char* m_projectionLoc;

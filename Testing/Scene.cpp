@@ -58,7 +58,7 @@ void Scene::render() {
 
 void Scene::update() {
     m_camera.update();
-    m_ticker += 0.5f;
+    m_ticker += 0.05f;
 }
 
 void Scene::exit() {

@@ -20,6 +20,7 @@ namespace Zenith {
         program->setupVAO(vbo, ebo);
         program->bindAttributes();
         program->link();
+        program->updateUniforms();
         m_programs.push_back(program);
         return (int)m_programs.size()-1;
     }
