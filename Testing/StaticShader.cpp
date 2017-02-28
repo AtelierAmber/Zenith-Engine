@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 
-StaticShader::StaticShader(){
+StaticShader::StaticShader() : IShaderProgram(false, true){
 
 }
 
@@ -15,6 +15,7 @@ void StaticShader::construct() {
     loadShader("./shaders/static.frag", GL_FRAGMENT_SHADER);
     setTransform("transform");
     setProjection("projection");
+    //addUniform("tex", &i, Zenith::UniformType::UNIFORM_INT);
 }
 
 void StaticShader::bindAttributes() {
@@ -24,6 +25,6 @@ void StaticShader::bindAttributes() {
     bindAttribute(3, "normal");
 }
 
-void StaticShader::loadUniforms() {
-    loadIntU(getUniformLocation("tex"), 0);
+void StaticShader::loadStaticUniforms() {
+    loadIntU(1, 0);
 }

@@ -98,13 +98,15 @@ namespace Zenith {
         }
 
         for (std::size_t i = 0; i < m_renderBatches.size(); ++i) {
-            if (m_renderBatches[i].textureID) {
+            if (m_renderBatches[i].textureID && shader->isTextureShader()) {
                 glBindTexture(GL_TEXTURE_2D, m_renderBatches[i].textureID);
             }
             shader->loadTransform(m_renderBatches[i].transform);
             glDrawElementsBaseVertex(GL_TRIANGLES, m_renderBatches[i].numIndicies, 
                 GL_UNSIGNED_SHORT, 0, m_renderBatches[i].indexOffset);
-            glBindTexture(GL_TEXTURE_2D, 0);
+            if (m_renderBatches[i].textureID && shader->isTextureShader()) {
+                glBindTexture(GL_TEXTURE_2D, 0);
+            }
         }
     }
 

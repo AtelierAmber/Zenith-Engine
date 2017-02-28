@@ -9,7 +9,8 @@
 
 namespace Zenith {
 
-    IShaderProgram::IShaderProgram() {
+    IShaderProgram::IShaderProgram(bool hasMaterial, bool hasTexture) : 
+        m_material(hasMaterial), m_texture(hasTexture){
         m_id = glCreateProgram();
     }
 
@@ -120,6 +121,57 @@ namespace Zenith {
         ++m_numAttribs;
     }
 
+    unsigned int IShaderProgram::addUniform(const char* name, void* value_ptr, UniformType type) {
+        for (int i = 0; i < m_uniforms.size(); ++i) {
+            if (m_uniforms[i].name == name) {
+                m_uniforms[i].type = type;
+                m_uniforms[i].value_ptr = value_ptr;
+                return i;
+            }
+        }
+        if (!m_uniformsUpdated) {
+            m_uniforms.emplace_back(name, value_ptr, type);
+        }else m_uniforms.emplace_back(getUniformLocation(name), value_ptr, type);
+        GLenum glOK = glGetError();
+        if (glOK) {
+            m_shaderLog->log("SHDR", LogType::WARNING, "Error while adding uniform " + std::string(name), glOK);
+        }
+        return (unsigned int)m_uniforms.size() - 1;
+    }
+
+    void IShaderProgram::editUniform(unsigned int uniformIndex, void* newValue_ptr, UniformType type) {
+        if (uniformIndex > m_uniforms.size()) {
+            m_shaderLog->log("SHDR", LogType::WARNING, "Tried to modify uniform that does not exist!", uniformIndex);
+            return;
+        }
+        m_uniforms[uniformIndex].type = type;
+        m_uniforms[uniformIndex].value_ptr = newValue_ptr;
+    }
+
+    void IShaderProgram::loadUniforms() {
+        for (auto& uni : m_uniforms) {
+            switch (uni.type) {
+            case UniformType::UNIFORM_INT:
+                loadIntU(uni.location, *(static_cast<int*>(uni.value_ptr)));
+                break;
+            case UniformType::UNIFORM_FLOAT:
+                loadFloatU(uni.location, *(static_cast<float*>(uni.value_ptr)));
+                break;
+            case UniformType::UNIFORM_VEC:
+                loadVecU(uni.location, *(static_cast<glm::vec3*>(uni.value_ptr)));
+                break;
+            case UniformType::UNIFORM_BOOL:
+                loadBoolU(uni.location, *(static_cast<bool*>(uni.value_ptr)));
+                break;
+            case UniformType::UNIFORM_MAT:
+                loadMatU(uni.location, *(static_cast<glm::mat4*>(uni.value_ptr)));
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
     int IShaderProgram::getUniformLocation(const char* name) {
         return glGetUniformLocation(m_id, name);
     }
@@ -142,6 +194,16 @@ namespace Zenith {
 
     void IShaderProgram::loadMatU(int location, glm::mat4 mat) const {
         glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
+    }
+
+    void IShaderProgram::updateUniforms() {
+        use();
+        loadStaticUniforms();
+        for (auto& uni : m_uniforms){
+            uni.location = getUniformLocation(uni.name);
+        }
+        m_uniformsUpdated = true;
+        end();
     }
 
     void IShaderProgram::link() {

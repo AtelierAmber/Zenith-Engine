@@ -9,11 +9,14 @@ public:
     ~StaticShader();
 
 protected:
-    virtual void construct() override;
+    void construct() override;
     
-    virtual void bindAttributes() override;
-    
-    virtual void loadUniforms() override;
+    void bindAttributes() override;
 
+    void loadStaticUniforms() override;
+
+private:
+
+    int i = 0;
 };
 
