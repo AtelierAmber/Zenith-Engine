@@ -43,7 +43,6 @@ namespace Zenith {
 
         unsigned int addUniform(const char* name, void* value_ptr, UniformType type);
         void editUniform(unsigned int uniformIndex, void* newValue_ptr, UniformType type);
-
     protected:
         /* Use to load shader files 
          * Construct must include: 
