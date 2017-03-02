@@ -1,11 +1,9 @@
 #version 400 core
 in vec3 position;
 in vec4 color;
-in vec2 uv;
 in vec3 normal;
 
-out vec4 Color;
-out vec2 UV;
+flat out vec4 Color;
 
 uniform mat4 transform;
 uniform mat4 projection;

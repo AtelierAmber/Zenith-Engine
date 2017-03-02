@@ -1,11 +1,10 @@
 #version 400 core
-in vec4 Color;
-in vec2 UV;
+flat in vec4 Color;
 
 out vec4 outColor;
 
-uniform sampler2D tex;
+uniform vec4 lightColor;
 
 void main(){
-  outColor = texture(tex, UV) * Color;
+  outColor = lightColor * Color;
 }

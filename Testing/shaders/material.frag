@@ -1,6 +1,6 @@
 #version 400 core
-in vec4 Color;
-in vec2 UV;
+flat in vec4 Color;
+flat in vec2 UV;
 
 out vec4 outColor;
 
