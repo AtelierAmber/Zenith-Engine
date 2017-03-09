@@ -175,23 +175,21 @@ namespace Zenith {
     int IShaderProgram::getUniformLocation(const char* name) {
         return glGetUniformLocation(m_id, name);
     }
-
     void IShaderProgram::loadIntU(int location, int value) const {
         glUniform1i(location, value);
     }
-
     void IShaderProgram::loadFloatU(int location, float value) const {
         glUniform1f(location, value);
     }
-
     void IShaderProgram::loadVecU(int location, glm::vec3 vec) const {
         glUniform3f(location, vec.x, vec.y, vec.z);
     }
-
+    void IShaderProgram::loadVecU(int location, glm::vec4 vec) const {
+        glUniform4f(location, vec.x, vec.y, vec.z, vec.w);
+    }
     void IShaderProgram::loadBoolU(int location, bool value) const {
         glUniform1i(location, (value)?1:0);
     }
-
     void IShaderProgram::loadMatU(int location, glm::mat4 mat) const {
         glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
     }

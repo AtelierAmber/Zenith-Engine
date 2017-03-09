@@ -4,8 +4,8 @@ in vec4 color;
 in vec2 uv;
 in vec3 normal;
 
-flat out vec4 Color;
-flat out vec2 UV;
+out vec4 Color;
+out vec2 UV;
 
 uniform mat4 transform;
 uniform mat4 projection;

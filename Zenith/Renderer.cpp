@@ -44,6 +44,7 @@ namespace Zenith {
         /* Itterate through the map */
         for (auto& batch : m_models) {
             m_shaderManager.useProgram(batch.first);
+            
             /* For each VAO (map.first) render a new batch */
             m_batch.begin();
             for (unsigned int i = 0; i < m_models[batch.first].size(); ++i) {

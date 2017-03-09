@@ -69,6 +69,7 @@ namespace Zenith {
         void loadIntU(int location, int value) const;
         void loadFloatU(int location, float value) const;
         void loadVecU(int location, glm::vec3 vec) const;
+        void loadVecU(int location, glm::vec4 vec) const;
         void loadBoolU(int location, bool value) const;
         void loadMatU(int location, glm::mat4 mat) const;
 

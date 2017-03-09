@@ -11,5 +11,4 @@ uniform mat4 projection;
 void main(){
     gl_Position = projection * transform * vec4(position, 1.0);
     Color = color;
-    UV = uv;
 }

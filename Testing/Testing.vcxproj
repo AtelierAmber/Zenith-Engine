@@ -139,11 +139,13 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MaterialShader.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="StaticShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="MaterialShader.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="StaticShader.h" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "StaticShader.h"
 
 #include <GL/glew.h>
+#include <iostream>
 
 StaticShader::StaticShader() : IShaderProgram(false, true){
 
@@ -15,16 +16,14 @@ void StaticShader::construct() {
     loadShader("./shaders/static.frag", GL_FRAGMENT_SHADER);
     setTransform("transform");
     setProjection("projection");
-    //addUniform("tex", &i, Zenith::UniformType::UNIFORM_INT);
 }
 
 void StaticShader::bindAttributes() {
     bindAttribute(0, "position");
     bindAttribute(1, "color");
-    bindAttribute(2, "uv");
     bindAttribute(3, "normal");
 }
 
 void StaticShader::loadStaticUniforms() {
-    loadIntU(1, 0);
+    loadVecU(getUniformLocation("lightColor"), glm::vec4(1.0f, 0.25f, 0.25f, 1.0f));
 }

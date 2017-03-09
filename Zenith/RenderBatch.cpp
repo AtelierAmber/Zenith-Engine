@@ -63,6 +63,11 @@ namespace Zenith {
             offset += m_modelPointers[c]->model->getNumVerticies();
         }
 
+        GLenum glOK = glGetError();
+        if (glOK) {
+            std::cerr << "Error " << glOK << " before buffering data! \n";
+        }
+
         /* Bind VBO for use */
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 
@@ -82,7 +87,7 @@ namespace Zenith {
         /* Upload the data */
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indicies.size() * sizeof(unsigned short), indicies.data());
 
-        GLenum glOK = glGetError();
+        glOK = glGetError();
         if (glOK) {
             std::cerr << "Error " << glOK << " while buffering data! \n";
         }

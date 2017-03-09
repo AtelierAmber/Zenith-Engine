@@ -1,21 +1,17 @@
 #pragma once
 #include <IShaderProgram.h>
-
-class StaticShader :
+class MaterialShader :
     public Zenith::IShaderProgram
 {
 public:
-    StaticShader();
-    ~StaticShader();
-
+    MaterialShader();
+    ~MaterialShader();
 protected:
     void construct() override;
-    
+
     void bindAttributes() override;
 
     void loadStaticUniforms() override;
-
-private:
 
 };
 

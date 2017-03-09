@@ -13,13 +13,12 @@ void Scene::build() {
     m_renderer.registerView(m_camera.getMatrix());
 
     /* TESTING */
-    std::vector<Zenith::Vertex> vertexes;
-    const Zenith::Texture* texture = m_dataLoader.loadImage("assets/wall.png", Zenith::TEX_CLAMP | Zenith::TEX_FILTER_MIPMAP);
+    //const Zenith::Texture* texture = m_dataLoader.loadImage("assets/wall.png", Zenith::TEX_CLAMP | Zenith::TEX_FILTER_MIPMAP);
     unsigned int id = 0;
-    if (texture == nullptr) {
+    /*if (texture == nullptr) {
         m_logger.log("SCEN", Zenith::LogType::ERROR, "Could not load image assets/wall.png!!");
     }
-    else id = texture->id;
+    else id = texture->id;*/
     m_model = Zenith::Model({ 
         0, 1, 2,
         2, 3, 0,
@@ -35,14 +34,14 @@ void Scene::build() {
         3, 7, 0,
         0, 4, 7
     }, {
-        Zenith::Vertex(-0.5f, -0.5f,  0.0f, 255, 255, 255, 255, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f), //0 BL
-        Zenith::Vertex(-0.5f,  0.5f,  0.0f, 255, 255, 255, 255, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f), //1 TL
-        Zenith::Vertex( 0.5f,  0.5f,  0.0f, 255, 255, 255, 255, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f), //2 TR
+        Zenith::Vertex(-0.5f, -0.5f,  0.0f,   0,   0, 255, 255, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f), //0 BL
+        Zenith::Vertex(-0.5f,  0.5f,  0.0f,   0, 255,   0, 255, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f), //1 TL
+        Zenith::Vertex( 0.5f,  0.5f,  0.0f, 255,   0,   0, 255, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f), //2 TR
         Zenith::Vertex( 0.5f, -0.5f,  0.0f, 255, 255, 255, 255, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f), //3 BR
 
-        Zenith::Vertex(-0.5f, -0.5f,  1.0f, 255, 255, 255, 255, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f), //0 BBL
-        Zenith::Vertex(-0.5f,  0.5f,  1.0f, 255, 255, 255, 255, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f), //1 BTL
-        Zenith::Vertex( 0.5f,  0.5f,  1.0f, 255, 255, 255, 255, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f), //2 BTR
+        Zenith::Vertex(-0.5f, -0.5f,  1.0f, 255,   0,   0, 255, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f), //0 BBL
+        Zenith::Vertex(-0.5f,  0.5f,  1.0f,   0, 255,   0, 255, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f), //1 BTL
+        Zenith::Vertex( 0.5f,  0.5f,  1.0f,   0,   0, 255, 255, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f), //2 BTR
         Zenith::Vertex( 0.5f, -0.5f,  1.0f, 255, 255, 255, 255, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f) //3 BBR
     }, id);
 }
@@ -58,7 +57,7 @@ void Scene::render() {
 
 void Scene::update() {
     m_camera.update();
-    m_ticker += 0.05f;
+    m_ticker += 0.5f;
 }
 
 void Scene::exit() {
