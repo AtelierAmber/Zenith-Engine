@@ -3,6 +3,8 @@
 #include "DataLoader.h"
 #include "Camera3D.h"
 
+#include "KeyCode.h"
+
 namespace Zenith {
     class IGame;
 
@@ -45,6 +47,8 @@ namespace Zenith {
     protected:
         void setNext(unsigned int next) { m_nextScene = next; }
 
+        bool keyStateIs(KeyID key /* Key::__ or Key::Modifier::__ */, KeyState state);
+
         Logger m_logger;
         DataLoader m_dataLoader;
         Camera3D m_camera;
@@ -53,5 +57,8 @@ namespace Zenith {
         IGame* m_game = nullptr;
         int m_nextScene;
         unsigned int m_sceneIndex;
+
+    private:
+        void dispose();
     };
 }

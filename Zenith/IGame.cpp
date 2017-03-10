@@ -17,6 +17,7 @@ namespace Zenith {
         build();
         int retVal = run();
         destroy();
+        exit();
         return retVal;
     }
 
@@ -26,6 +27,11 @@ namespace Zenith {
             m_sceneManager.getCurrent()->coreRender();
         }
         return 0;
+    }
+
+    void IGame::exit() {
+        m_sceneManager.destroy();
+        m_windowManager.dispose();
     }
 
     void IGame::update() {

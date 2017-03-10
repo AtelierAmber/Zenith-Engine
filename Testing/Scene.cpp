@@ -57,7 +57,12 @@ void Scene::render() {
 
 void Scene::update() {
     m_camera.update();
-    m_ticker += 0.5f;
+    m_ticker += 0.05f;
+    if (keyStateIs(Key::r, KeyState::PRESSED) && 
+        keyStateIs(Key::Modifier::LSHIFT, KeyState::PRESSED) &&
+        keyStateIs(Key::Modifier::LCTRL, KeyState::PRESSED)){
+        m_renderer.getShader(m_shader)->reload();
+    }
 }
 
 void Scene::exit() {

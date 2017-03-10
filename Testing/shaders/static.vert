@@ -3,7 +3,7 @@ in vec3 position;
 in vec4 color;
 in vec3 normal;
 
-flat out vec4 Color;
+smooth out vec4 Color;
 
 uniform mat4 transform;
 uniform mat4 projection;

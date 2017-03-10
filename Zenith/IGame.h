@@ -14,6 +14,7 @@ namespace Zenith {
         int start(const char* title = "Zenith Game", int x = 0, int y = 0, unsigned int width = 1280, unsigned int height = 720, unsigned int windowFlags = 0);
 
         const WindowManager* getWindowManager() const { return &m_windowManager; }
+        const InputManager* getInputManager() const { return &m_inputManager; }
 
     protected:
         /* Called on game start
@@ -25,7 +26,7 @@ namespace Zenith {
         virtual void IUpdate() = 0;
 
         /* Called on game exit
-         * Used for scene independent variables */
+         * Used for game independent variables */
         virtual void destroy() = 0;
 
         bool m_running = true;
@@ -35,6 +36,7 @@ namespace Zenith {
     private:
         /* Runs the game */
         int run();
+        void exit();
 
         /* Update systems, scenes, etc. */
         void update();

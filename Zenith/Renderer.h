@@ -20,6 +20,8 @@ namespace Zenith {
          * CALL BEFORE COMPILE */
         unsigned int addShader(IShaderProgram* program);
 
+        IShaderProgram* getShader(unsigned int programID);
+
         /* Compiles resources such as shaders 
         void compile();*/
 
@@ -49,6 +51,8 @@ namespace Zenith {
         }
         glm::mat4 generateTransformMatrix(glm::vec3 position, glm::vec3 rotation, float scale) const;
 
+        /* Pointer to the camera matrix
+         * Updates whenever the camera updates, it is a pointer after all */
         glm::mat4* m_viewMatrix;
         /* Use map to map shader index to vector of models to render */
         unsigned int m_currentShader = 0;

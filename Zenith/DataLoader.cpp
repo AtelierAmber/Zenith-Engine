@@ -114,10 +114,34 @@ namespace Zenith{
             m_logger.log("LOAD", LogType::ERROR, "Could not load file " + std::string(fileName) + "!!");
             return newModel;
         }
-        
+
+        std::vector<Vertex> verticies;
+
+        std::fstream materialLib;
         std::string line;
+        std::getline(file, line);
+        while (line[0] == '#') {
+            //Throw away comment
+            std::getline(file, line);
+        }
+        if (line.substr(0, 5) == "mtllib") {
+            /* Set material file */
+            materialLib.open(line.substr(5));
+        }
         while (std::getline(file, line)) {
-            
+            if (line.substr(0, 5) == "usemtl") {
+                /* Process material */
+                continue;
+            }
+            if (line[0] == 'v') {
+                /* Process vertex */
+                line = line.substr(2, line.npos);
+                float x = std::stof(line.substr(0, line.find(' ')));
+                line = line.substr(line.find(' '), line.npos);
+                float y = std::stof(line.substr());
+                line = line.substr(line.find(' '), line.npos);
+                float z = std::stof(line);
+            }
         }
     }
 }

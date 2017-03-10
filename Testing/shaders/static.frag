@@ -1,5 +1,5 @@
 #version 400 core
-flat in vec4 Color;
+smooth in vec4 Color;
 
 out vec4 outColor;
 

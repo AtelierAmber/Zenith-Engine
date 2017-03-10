@@ -17,7 +17,14 @@ namespace Zenith {
     IShaderProgram::~IShaderProgram() {}
 
     void IShaderProgram::reload() {
-        
+        if (m_vertexName != "NO_FILE_NAME") {
+            loadShader(m_vertexName.c_str(), GL_VERTEX_SHADER);
+        }
+        if (m_fragmentName != "NO_FILE_NAME") {
+            loadShader(m_fragmentName.c_str(), GL_FRAGMENT_SHADER);
+        }
+        link();
+        updateUniforms();
     }
 
     void IShaderProgram::loadTransform(const glm::mat4& mat) {
@@ -83,12 +90,14 @@ namespace Zenith {
         switch (type) {
         case GL_VERTEX_SHADER:
             m_vertexID = shaderID;
+            m_vertexName = filename;
             break;
         case GL_GEOMETRY_SHADER:
 
             break;
         case GL_FRAGMENT_SHADER:
             m_fragmentID = shaderID;
+            m_fragmentName = filename;
             break;
         default:
             m_shaderLog->log("SHDR", LogType::WARNING, "Unknown shader type: " + std::to_string(type) + ". Shader may not have loaded correctly!");

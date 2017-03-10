@@ -1,5 +1,12 @@
 #pragma once
 
+enum class KeyState {
+    PRESSED,
+    RELEASED,
+    TAPPED,
+    NOTACTIVE
+};
+
 #define SCANCODE_MASK (1<<30)
 #define SCANCODE_TO_KEYCODE(X) (X | SCANCODE_MASK) 
 #define BUTTON(X) (1 << ((X)-1))
@@ -233,35 +240,35 @@ namespace Key {
                                         */
 
 
-                                        /* These values are mapped from usage page 0x0C (USB consumer page) */
-                                        AUDIONEXT = SCANCODE_TO_KEYCODE(258),
-                                        AUDIOPREV = SCANCODE_TO_KEYCODE(259),
-                                        AUDIOSTOP = SCANCODE_TO_KEYCODE(260),
-                                        AUDIOPLAY = SCANCODE_TO_KEYCODE(261),
-                                        AUDIOMUTE = SCANCODE_TO_KEYCODE(262),
-                                        MEDIASELECT = SCANCODE_TO_KEYCODE(263),
-                                        WWW = SCANCODE_TO_KEYCODE(264),
-                                        MAIL = SCANCODE_TO_KEYCODE(265),
-                                        CALCULATOR = SCANCODE_TO_KEYCODE(266),
-                                        COMPUTER = SCANCODE_TO_KEYCODE(267),
-                                        AC_SEARCH = SCANCODE_TO_KEYCODE(268),
-                                        AC_HOME = SCANCODE_TO_KEYCODE(269),
-                                        AC_BACK = SCANCODE_TO_KEYCODE(270),
-                                        AC_FORWARD = SCANCODE_TO_KEYCODE(271),
-                                        AC_STOP = SCANCODE_TO_KEYCODE(272),
-                                        AC_REFRESH = SCANCODE_TO_KEYCODE(273),
-                                        AC_BOOKMARKS = SCANCODE_TO_KEYCODE(274),
+        /* These values are mapped from usage page 0x0C (USB consumer page) */
+        AUDIONEXT = SCANCODE_TO_KEYCODE(258),
+        AUDIOPREV = SCANCODE_TO_KEYCODE(259),
+        AUDIOSTOP = SCANCODE_TO_KEYCODE(260),
+        AUDIOPLAY = SCANCODE_TO_KEYCODE(261),
+        AUDIOMUTE = SCANCODE_TO_KEYCODE(262),
+        MEDIASELECT = SCANCODE_TO_KEYCODE(263),
+        WWW = SCANCODE_TO_KEYCODE(264),
+        MAIL = SCANCODE_TO_KEYCODE(265),
+        CALCULATOR = SCANCODE_TO_KEYCODE(266),
+        COMPUTER = SCANCODE_TO_KEYCODE(267),
+        AC_SEARCH = SCANCODE_TO_KEYCODE(268),
+        AC_HOME = SCANCODE_TO_KEYCODE(269),
+        AC_BACK = SCANCODE_TO_KEYCODE(270),
+        AC_FORWARD = SCANCODE_TO_KEYCODE(271),
+        AC_STOP = SCANCODE_TO_KEYCODE(272),
+        AC_REFRESH = SCANCODE_TO_KEYCODE(273),
+        AC_BOOKMARKS = SCANCODE_TO_KEYCODE(274),
 
-                                        /* These are values that Christian Walther added (for mac keyboard?) */
-                                        BRIGHTNESSDOWN = SCANCODE_TO_KEYCODE(275),
-                                        BRIGHTNESSUP = SCANCODE_TO_KEYCODE(276),
-                                        DISPLAYSWITCH = SCANCODE_TO_KEYCODE(277),
+        /* These are values that Christian Walther added (for mac keyboard?) */
+        BRIGHTNESSDOWN = SCANCODE_TO_KEYCODE(275),
+        BRIGHTNESSUP = SCANCODE_TO_KEYCODE(276),
+        DISPLAYSWITCH = SCANCODE_TO_KEYCODE(277),
 
-                                        KBDILLUMTOGGLE = SCANCODE_TO_KEYCODE(278),
-                                        KBDILLUMDOWN = SCANCODE_TO_KEYCODE(279),
-                                        KBDILLUMUP = SCANCODE_TO_KEYCODE(280),
-                                        EJECT = SCANCODE_TO_KEYCODE(281),
-                                        SLEEP = SCANCODE_TO_KEYCODE(282),
+        KBDILLUMTOGGLE = SCANCODE_TO_KEYCODE(278),
+        KBDILLUMDOWN = SCANCODE_TO_KEYCODE(279),
+        KBDILLUMUP = SCANCODE_TO_KEYCODE(280),
+        EJECT = SCANCODE_TO_KEYCODE(281),
+        SLEEP = SCANCODE_TO_KEYCODE(282)
     };
 
     namespace Modifier {
@@ -275,7 +282,7 @@ namespace Key {
             LALT = SCANCODE_TO_KEYCODE(226), /**< alt, option */
             RALT = SCANCODE_TO_KEYCODE(230), /**< alt gr, option */
             LGUI = SCANCODE_TO_KEYCODE(227), /**< windows, command (apple), meta */
-            RGUI = SCANCODE_TO_KEYCODE(231), /**< windows, command (apple), meta */
+            RGUI = SCANCODE_TO_KEYCODE(231) /**< windows, command (apple), meta */
         };
     }
 }

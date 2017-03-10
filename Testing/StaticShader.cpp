@@ -25,5 +25,5 @@ void StaticShader::bindAttributes() {
 }
 
 void StaticShader::loadStaticUniforms() {
-    loadVecU(getUniformLocation("lightColor"), glm::vec4(1.0f, 0.25f, 0.25f, 1.0f));
+    loadVecU(getUniformLocation("lightColor"), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 }

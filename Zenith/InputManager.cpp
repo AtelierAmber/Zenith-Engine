@@ -60,18 +60,18 @@ namespace Zenith {
     }
 
     void InputManager::releaseKey(KeyID key) {
-        m_keyMap[key] = true;
+        m_keyMap[key] = false;
         m_previousKeyMap[key] = true;
     }
 
-    KeyState InputManager::keyState(KeyID key) {
+    KeyState InputManager::keyState(KeyID key) const{
         if (isKeyPressed(key)) return KeyState::TAPPED;
         if (isKeyDown(key)) return KeyState::PRESSED;
         if (wasKeyReleased(key)) return KeyState::RELEASED;
         return KeyState::NOTACTIVE;
     }
 
-    bool InputManager::isKeyDown(KeyID key) {
+    bool InputManager::isKeyDown(KeyID key) const{
         /* Don't create arbitrary keys */
         auto it = m_keyMap.find(key);
         if (it != m_keyMap.end()) {
@@ -81,14 +81,14 @@ namespace Zenith {
         return false;
     }
 
-    bool InputManager::isKeyPressed(KeyID key) {
+    bool InputManager::isKeyPressed(KeyID key) const{
         if (isKeyDown(key) && !wasKeyReleased(key)) {
             return true;
         }
         return false;
     }
 
-    bool InputManager::wasKeyReleased(KeyID key) {
+    bool InputManager::wasKeyReleased(KeyID key) const{
         /* Don't create arbitrary keys */
         auto it = m_previousKeyMap.find(key);
         if (it != m_previousKeyMap.end()) {

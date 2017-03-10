@@ -86,6 +86,8 @@ namespace Zenith {
 
         bool m_material, m_texture;
 
+        std::string m_vertexName = "NO_FILE_NAME", m_fragmentName = "NO_FILE_NAME";
+
         Logger* m_shaderLog = nullptr;
 
         bool m_uniformsUpdated = false;

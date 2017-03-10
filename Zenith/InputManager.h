@@ -5,13 +5,6 @@
 
 #include <SDL/SDL.h>
 
-enum class KeyState {
-    PRESSED,
-    RELEASED,
-    TAPPED,
-    NOTACTIVE
-};
-
 namespace Zenith {
 #define frames_per_key_update 2
     struct KeyRef {
@@ -67,13 +60,13 @@ namespace Zenith {
         void pressKey(KeyID key);
         void releaseKey(KeyID key);
 
-        KeyState keyState(KeyID key);
+        KeyState keyState(KeyID key) const;
 
         const Mouse& getMouse() const { return m_mouse; }
     private:
-        bool isKeyDown(KeyID key);
-        bool isKeyPressed(KeyID key);
-        bool wasKeyReleased(KeyID key);
+        bool isKeyDown(KeyID key) const;
+        bool isKeyPressed(KeyID key) const;
+        bool wasKeyReleased(KeyID key) const;
 
         std::unordered_map<KeyID, bool> m_keyMap;
         std::unordered_map<KeyID, KeyRef> m_previousKeyMap;

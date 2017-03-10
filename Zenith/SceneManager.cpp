@@ -53,6 +53,8 @@ namespace Zenith {
             m_scenes[m_currentScene]->exit();
             for (auto& scene : m_scenes) {
                 scene->destroy();
+                scene->dispose();
+                delete scene;
             }
             m_scenes.resize(0);
             m_currentScene = 0;
