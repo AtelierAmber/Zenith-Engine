@@ -46,6 +46,9 @@ namespace Zenith {
             flags |= SDL_WINDOW_BORDERLESS;
             m_windowLog.log("WNDW", LogType::EVENT, "Window set to borderless");
         }
+        if (windowFlags & WindowFlag::CURSOR_HIDDEN) {
+            SDL_ShowCursor(SDL_DISABLE);
+        }
 
         ///Create window
         m_window = SDL_CreateWindow(title, x, y, width, height, flags);
@@ -55,6 +58,12 @@ namespace Zenith {
         }
         if (windowFlags & WindowFlag::CENTERED) {
             centerWindow();
+        }
+        if (windowFlags & WindowFlag::CURSOR_TRAP) {
+            SDL_SetWindowGrab(m_window, SDL_TRUE);
+            if (SDL_SetRelativeMouseMode(SDL_TRUE) == -1) {
+                m_windowLog.log("WNDW", LogType::WARNING, "SDL Relative mouse mode not supported!");
+            }
         }
 
         ///Setup the window
@@ -71,7 +80,7 @@ namespace Zenith {
         }
 
         //Set the viewport
-        glViewport(0, 0, width, height);
+        glViewport(0, 0, m_winWidth, m_winHeight);
 
         //Check the OpenGL version
         std::printf("\n\n***   OpenGL Version: %s   ***\n\n", glGetString(GL_VERSION));

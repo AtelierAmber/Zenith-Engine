@@ -35,11 +35,11 @@ namespace Zenith {
     }
 
     void IGame::update() {
-        m_inputManager.update(&m_windowManager);
         IUpdate();
         m_sceneManager.getCurrent()->update();
         if (m_windowManager.update()) {
             m_running = false;
         }
+        m_inputManager.update(&m_windowManager);
     }
 }

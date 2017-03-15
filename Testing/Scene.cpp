@@ -19,31 +19,8 @@ void Scene::build() {
         m_logger.log("SCEN", Zenith::LogType::ERROR, "Could not load image assets/wall.png!!");
     }
     else id = texture->id;*/
-    m_model = Zenith::Model({ 
-        0, 1, 2,
-        2, 3, 0,
-        4, 5, 6,
-        6, 7, 4,
-
-        0, 4, 5,
-        0, 1, 5,
-        1, 5, 6,
-        1, 2, 6,
-        2, 6, 7,
-        2, 3, 7,
-        3, 7, 0,
-        0, 4, 7
-    }, {
-        Zenith::Vertex(-0.5f, -0.5f,  0.0f,   0,   0, 255, 255, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f), //0 BL
-        Zenith::Vertex(-0.5f,  0.5f,  0.0f,   0, 255,   0, 255, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f), //1 TL
-        Zenith::Vertex( 0.5f,  0.5f,  0.0f, 255,   0,   0, 255, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f), //2 TR
-        Zenith::Vertex( 0.5f, -0.5f,  0.0f, 255, 255, 255, 255, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f), //3 BR
-
-        Zenith::Vertex(-0.5f, -0.5f,  1.0f, 255,   0,   0, 255, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f), //0 BBL
-        Zenith::Vertex(-0.5f,  0.5f,  1.0f,   0, 255,   0, 255, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f), //1 BTL
-        Zenith::Vertex( 0.5f,  0.5f,  1.0f,   0,   0, 255, 255, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f), //2 BTR
-        Zenith::Vertex( 0.5f, -0.5f,  1.0f, 255, 255, 255, 255, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f) //3 BBR
-    }, id);
+    m_model = m_dataLoader.loadOBJ("assets/models/PineTree.zenObj");
+    m_pointLight = m_dataLoader.loadOBJ("assets/models/Lantern.zenObj");
 }
 
 void Scene::enter() {
@@ -51,17 +28,46 @@ void Scene::enter() {
 }
 
 void Scene::render() {
-    m_renderer.render(m_shader, &m_model, 0, 0.0f, 0.0f, -3.0f, -m_ticker, 0.0f, m_ticker, 1.0f);
-    m_renderer.render(m_shader, &m_model, 0, 1.5f, 1.0f, -3.0f, m_ticker, 0.0f, -m_ticker, 1.0f);
+    m_renderer.render(m_shader, &m_model, Zenith::Transform(glm::vec3(0.0f, 1.0f, -5.0f), glm::vec3(0.0f, 0.0f, 0.0f), 1.0f));
+    //m_renderer.render(m_shader, &m_pointLight, Zenith::Transform(glm::vec3(0.0f, 0.0f,  0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 1.0f));
 }
 
 void Scene::update() {
     m_camera.update();
-    m_ticker += 0.05f;
+    m_ticker += 0.005f;
+
+    /* Rotate camera when the mouse is moved */
+    m_camera.rotate(glm::vec3(getMouse()->getYRel(), -getMouse()->getXRel(), 0.0f) * -0.1f);
+
+    if (keyStateIs(Key::e, KeyState::PRESSED)) {
+        m_camera.rotate(glm::vec3(0.01f, 0.01f, 0.0f));
+    }
+    if (keyStateIs(Key::q, KeyState::PRESSED)) {
+        m_camera.rotate(glm::vec3(-0.01f, -0.01f, 0.0f));
+    }
+
     if (keyStateIs(Key::r, KeyState::PRESSED) && 
         keyStateIs(Key::Modifier::LSHIFT, KeyState::PRESSED) &&
         keyStateIs(Key::Modifier::LCTRL, KeyState::PRESSED)){
         m_renderer.getShader(m_shader)->reload();
+    }
+    if (keyStateIs(Key::w, KeyState::PRESSED)) {
+        m_camera.move(glm::vec3(0.0f, 0.0f, 0.005f));
+    }
+    if (keyStateIs(Key::s, KeyState::PRESSED)) {
+        m_camera.move(glm::vec3(0.0f, 0.0f, -0.005f));
+    }
+    if (keyStateIs(Key::a, KeyState::PRESSED)) {
+        m_camera.move(glm::vec3(-0.005f, 0.0f, 0.0f));
+    }
+    if (keyStateIs(Key::d, KeyState::PRESSED)) {
+        m_camera.move(glm::vec3(0.005f, 0.0f, 0.0f));
+    }
+    if (keyStateIs(Key::SPACE, KeyState::PRESSED)) {
+        m_camera.move(glm::vec3(0.0f, 0.005f, 0.0f));
+    }
+    if (keyStateIs(Key::Modifier::LCTRL, KeyState::PRESSED)) {
+        m_camera.move(glm::vec3(0.0f, -0.005f, 0.0f));
     }
 }
 

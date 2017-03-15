@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include "Logger.h"
-#include "Model.h"
+#include "Primitives.h"
 
 namespace Zenith {
     struct Texture {

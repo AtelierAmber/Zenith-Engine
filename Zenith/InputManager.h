@@ -28,7 +28,10 @@ namespace Zenith {
     public:
         void update();
 
-        void move(signed int x, signed int y) { m_x = x; m_y = y; }
+        void move(int x, int y, int xRel, int yRel) { 
+            m_x = x; m_y = y;
+            m_xRel = xRel; m_yRel = yRel;
+        }
 
         void pressButton(MouseButton button);
         void releaseButton(MouseButton button);
@@ -37,9 +40,15 @@ namespace Zenith {
         bool isButtonDown(MouseButton button);
         bool isButtonPressed(MouseButton button);
         bool wasButtonReleased(MouseButton button);
+
+        int getX() const { return m_x; }
+        int getY() const { return m_y; }
+        int getXRel() const { return m_xRel; }
+        int getYRel() const { return m_yRel; }
     private:
         int m_scroll;
-        signed int m_x, m_y;
+        int m_x, m_y;
+        int m_xRel, m_yRel;
         std::unordered_map<MouseButton, bool> m_buttonMap;
         std::unordered_map<MouseButton, KeyRef> m_previousButtonMap;
     };

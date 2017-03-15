@@ -1,5 +1,4 @@
 #include "RenderBatch.h"
-#include "Model.h"
 #include "Logger.h"
 #include "IShaderProgram.h"
 
@@ -30,7 +29,7 @@ namespace Zenith {
         m_renderBatches.clear();
     }
 
-    void RenderBatch::add(DepthModel* model) {
+    void RenderBatch::add(TransformedModel* model) {
         m_modelPointers.push_back(model);
     }
 
@@ -50,17 +49,46 @@ namespace Zenith {
         /* Initialize the verticies */
         int offset = 0; // current offset
 
-        //Add all the rest of the glyphs
+        /* Add the mesh data */
         for (std::size_t c = 0; c < m_modelPointers.size(); ++c) {
-            m_renderBatches.emplace_back(offset, m_modelPointers[c]->model->getNumIndicies(), 
-                m_modelPointers[c]->model->getTexture(), m_modelPointers[c]->depth, m_modelPointers[c]->transform);
-            for (auto& vert : m_modelPointers[c]->model->getVertices()) {
-                vertices.push_back(vert);
+            if (m_modelPointers[c]->m_objectTransforms.size() == 0) {
+                /* Load model as one mesh */
+                unsigned int numIndicies = 0;
+                unsigned int newOffset = 0;
+                for (auto& obj : m_modelPointers[c]->ptr_model->getObjects()) {
+                    for (auto& vert : obj.vertices) {
+                        vertices.push_back(vert);
+                    }
+                    for (auto& face : obj.faces) {
+                        indicies.push_back(face.vi_A + newOffset);
+                        indicies.push_back(face.vi_B + newOffset);
+                        indicies.push_back(face.vi_C + newOffset);
+                    }
+                    numIndicies += obj.getNumFaces() * 3;
+                    newOffset += obj.getNumVerts();
+                }
+
+                m_renderBatches.emplace_back(offset, numIndicies, m_modelPointers[c]->ptr_model->getTexture(),
+                    m_modelPointers[c]->m_transform.transformMatrix);
+                offset += newOffset;
             }
-            for (auto& ind : m_modelPointers[c]->model->getIndicies()) {
-                indicies.push_back(ind);
+            else {
+                /* Load model as multiple meshes, each with different transforms */
+                for (unsigned int i = 0; i < m_modelPointers[c]->ptr_model->getObjects().size(); ++i) {
+                    auto& obj = m_modelPointers[c]->ptr_model->getObjects()[i];
+                    offset += obj.getNumVerts();
+                    m_renderBatches.emplace_back(offset, obj.getNumFaces() * 3, m_modelPointers[c]->ptr_model->getTexture(), 
+                        m_modelPointers[c]->m_transform.transformMatrix * m_modelPointers[c]->m_objectTransforms[i].transformMatrix);
+                    for (auto& vert : obj.vertices) {
+                        vertices.push_back(vert);
+                    }
+                    for (auto& face : obj.faces) {
+                        indicies.push_back(face.vi_A);
+                        indicies.push_back(face.vi_B);
+                        indicies.push_back(face.vi_C);
+                    }
+                }
             }
-            offset += m_modelPointers[c]->model->getNumVerticies();
         }
 
         GLenum glOK = glGetError();
@@ -103,15 +131,12 @@ namespace Zenith {
         }
 
         for (std::size_t i = 0; i < m_renderBatches.size(); ++i) {
-            if (m_renderBatches[i].textureID && shader->isTextureShader()) {
+            if (shader->isTextureShader()) {
                 glBindTexture(GL_TEXTURE_2D, m_renderBatches[i].textureID);
             }
             shader->loadTransform(m_renderBatches[i].transform);
             glDrawElementsBaseVertex(GL_TRIANGLES, m_renderBatches[i].numIndicies, 
                 GL_UNSIGNED_SHORT, 0, m_renderBatches[i].indexOffset);
-            if (m_renderBatches[i].textureID && shader->isTextureShader()) {
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
         }
     }
 
@@ -136,11 +161,11 @@ namespace Zenith {
         }
     }
 
-    bool RenderBatch::compareFrontToBack(DepthModel* a, DepthModel* b) {
-        return (a->depth < b->depth);
+    bool RenderBatch::compareFrontToBack(TransformedModel* a, TransformedModel* b) {
+        return (a->m_transform.position.z < b->m_transform.position.z);
     }
 
-    bool RenderBatch::compareBackToFront(DepthModel* a, DepthModel* b) {
-        return (a->depth > b->depth);
+    bool RenderBatch::compareBackToFront(TransformedModel* a, TransformedModel* b) {
+        return (a->m_transform.position.z > b->m_transform.position.z);
     }
 }

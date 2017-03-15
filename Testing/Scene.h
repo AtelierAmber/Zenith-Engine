@@ -1,6 +1,6 @@
 #pragma once
 #include <IScene.h>
-#include <Model.h>
+#include <Primitives.h>
 
 #include "StaticShader.h"
 
@@ -38,5 +38,6 @@ private:
 
     unsigned int m_shader;
     Zenith::Model m_model;
+    Zenith::Model m_pointLight;
 };
 

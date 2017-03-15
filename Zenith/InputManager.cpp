@@ -7,6 +7,7 @@ namespace Zenith {
     InputManager::~InputManager() {}
 
     void InputManager::update(WindowManager* window) {
+        m_mouse.update();
         SDL_Event evnt;
         while (SDL_PollEvent(&evnt)) {
             switch (evnt.type) {
@@ -36,7 +37,7 @@ namespace Zenith {
                 }
                 break;
             case SDL_MOUSEMOTION:
-                m_mouse.move(evnt.motion.x, evnt.motion.y);
+                m_mouse.move(evnt.motion.x, evnt.motion.y, evnt.motion.xrel, evnt.motion.yrel);
                 break;
             case SDL_MOUSEWHEEL:
                 m_mouse.scroll(evnt.wheel.y);
@@ -51,7 +52,6 @@ namespace Zenith {
             }
             else --m_previousKeyMap[it.first].timer; /**< Decrease key press time.*/
         }
-        m_mouse.update();
     }
 
     void InputManager::pressKey(KeyID key) {
@@ -99,6 +99,8 @@ namespace Zenith {
     }
 
     void Mouse::update() {
+        m_yRel = 0;
+        m_xRel = 0;
         for (auto& it : m_buttonMap) {
             if (m_previousButtonMap[it.first].timer <= 0) {
                 m_previousButtonMap[it.first].timer = 0;

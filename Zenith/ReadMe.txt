@@ -27,6 +27,3 @@ AppWizard uses "TODO:" comments to indicate parts of the source code you
 should add to or customize.
 
 /////////////////////////////////////////////////////////////////////////////
-
-TODO:
-- Implement KeyState system in InputManager (checkKeyState() <Pressed, Released, Tapped>)

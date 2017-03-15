@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "Model.h"
+#include "Primitives.h"
 #include "IShaderProgram.h"
 
 #include <GL/glew.h>
@@ -11,6 +11,7 @@ namespace Zenith {
         m_logger.construct("render.log", "RNDR");
         m_batch.init();
         m_shaderManager.construct(&m_logger);
+        glEnable(GL_DEPTH_TEST);
     }
 
     Renderer::~Renderer() {}
@@ -33,18 +34,19 @@ namespace Zenith {
         m_models.clear();
     }
 
-    void Renderer::render(unsigned int shader, Model* model, float depth) {
-        m_models[shader].emplace_back(depth, glm::mat4(1.0f), model);
+    void Renderer::render(unsigned int shader, Model* model) {
+        m_models[shader].emplace_back(Transform(), model);
     }
 
-    void Renderer::render(unsigned int shader, Model* model, float depth, float x, 
-        float y, float z, float rotx, float roty, float rotz, float scale) {
-        glm::mat4 transform = generateTransformMatrix(glm::vec3(x, y, z), glm::vec3(rotx, roty, rotz), scale);
-        m_models[shader].emplace_back(depth, transform, model);
+    void Renderer::render(unsigned int shader, Model* model, Transform transform) {
+        m_models[shader].emplace_back(transform, model);
+    }
+
+    void Renderer::render(unsigned int shader, Model* model, Transform transform, std::vector<Transform> objectTransforms) {
+        m_models[shader].emplace_back(transform, model, objectTransforms);
     }
 
     void Renderer::end() {
-        glEnable(GL_DEPTH_TEST);
         /* Itterate through the map */
         for (auto& batch : m_models) {
             m_shaderManager.useProgram(batch.first);
@@ -65,15 +67,4 @@ namespace Zenith {
         m_shaderManager.dispose();
         m_batch.dispose();
     }
-
-    glm::mat4 Renderer::generateTransformMatrix(glm::vec3 position, glm::vec3 rotation, float scale) const {
-        glm::mat4 matrix = glm::mat4(1.0f);
-        matrix = glm::translate(matrix, position);
-        matrix = glm::rotate(matrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-        matrix = glm::rotate(matrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-        matrix = glm::rotate(matrix, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
-        matrix *= scale;
-        return matrix;
-    }
-
 }

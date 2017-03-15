@@ -108,40 +108,66 @@ namespace Zenith{
 
     Zenith::Model DataLoader::loadOBJ(const char* fileName, ImageFlag flags /*= NO_FLAGS*/) {
         Model newModel;
-        std::fstream file;
-        file.open(fileName);
-        if (file.fail()) {
-            m_logger.log("LOAD", LogType::ERROR, "Could not load file " + std::string(fileName) + "!!");
-            return newModel;
+        std::fstream fin;
+        fin.open(fileName, std::ios::in | std::ios::binary);
+        if (fin.fail()) {
+            std::printf("Failed to open%s", fileName);
         }
-
-        std::vector<Vertex> verticies;
-
-        std::fstream materialLib;
-        std::string line;
-        std::getline(file, line);
-        while (line[0] == '#') {
-            //Throw away comment
-            std::getline(file, line);
+        /* Materials */
+        unsigned int numMats = 0;
+        fin.read((char*)&numMats, sizeof(unsigned int));
+        newModel.m_materials.resize(numMats);
+        for (unsigned int i = 0; i < numMats; ++i) {
+            std::string matName = "";
+            std::getline(fin, matName);
+            newModel.m_materialIndices[matName] = i;
+            newModel.m_materials[i].name = matName;
+            fin.read((char*)&newModel.m_materials[i].specularExponent, sizeof(float)); /* 4 being the size of float */
+            fin.read((char*)&newModel.m_materials[i].refractionValue, sizeof(float));
+            fin.read((char*)&newModel.m_materials[i].illumValue, sizeof(unsigned int)); /* 4U being the size of unsigned int */
+            fin.read((char*)&newModel.m_materials[i].ambientColor, sizeof(unsigned char)*4);/* 4U being the size of unsigned char * 4 -> the size of ColorRGB8 */
+            fin.read((char*)&newModel.m_materials[i].diffuseColor, sizeof(unsigned char)*4);
+            fin.read((char*)&newModel.m_materials[i].specularColor, sizeof(unsigned char)*4);
         }
-        if (line.substr(0, 5) == "mtllib") {
-            /* Set material file */
-            materialLib.open(line.substr(5));
-        }
-        while (std::getline(file, line)) {
-            if (line.substr(0, 5) == "usemtl") {
-                /* Process material */
-                continue;
+        /* Object Data */
+        unsigned int numObj = 0;
+        fin.read((char*)&numObj, sizeof(unsigned int));
+        newModel.m_objects.resize(numObj);
+        for (unsigned int i = 0; i < numObj; ++i) {
+            auto& object = newModel.m_objects[i];
+            std::getline(fin, object.name);
+            /* Vertices */
+            unsigned int numVert = 0;
+            fin.read((char*)&numVert, sizeof(unsigned int));
+            newModel.m_objects[i].vertices.resize(numVert);
+            for (unsigned int v = 0; v < numVert; ++v) {
+                fin.read((char*)&object.vertices[v].position.x, sizeof(float)); /* 4 being the size of float */
+                fin.read((char*)&object.vertices[v].position.y, sizeof(float));
+                fin.read((char*)&object.vertices[v].position.z, sizeof(float));
+                fin.read((char*)&object.vertices[v].uv.u, sizeof(float));
+                fin.read((char*)&object.vertices[v].uv.v, sizeof(float));
+                fin.read((char*)&object.vertices[v].normal.nx, sizeof(float));
+                fin.read((char*)&object.vertices[v].normal.ny, sizeof(float));
+                fin.read((char*)&object.vertices[v].normal.nz, sizeof(float));
             }
-            if (line[0] == 'v') {
-                /* Process vertex */
-                line = line.substr(2, line.npos);
-                float x = std::stof(line.substr(0, line.find(' ')));
-                line = line.substr(line.find(' '), line.npos);
-                float y = std::stof(line.substr());
-                line = line.substr(line.find(' '), line.npos);
-                float z = std::stof(line);
+            /* Face data */
+            unsigned int numFace = 0;
+            fin.read((char*)&numFace, sizeof(unsigned int));
+            newModel.m_objects[i].faces.resize(numFace);
+            for (unsigned int f = 0; f < numFace; ++f) {
+                auto& object = newModel.m_objects[i];
+                fin.read((char*)&object.faces[f].mat, sizeof(unsigned int));
+                fin.read((char*)&object.faces[f].vi_A, sizeof(unsigned short));
+                fin.read((char*)&object.faces[f].vi_B, sizeof(unsigned short));
+                fin.read((char*)&object.faces[f].vi_C, sizeof(unsigned short));
+                /* Set vertex diffuse colors */
+                ColorRGBA8& vertColor = newModel.m_materials[object.faces[f].mat].diffuseColor;
+                object.vertices[object.faces[f].vi_A].color = vertColor;
+                object.vertices[object.faces[f].vi_B].color = vertColor;
+                object.vertices[object.faces[f].vi_C].color = vertColor;
             }
         }
+        fin.close();
+        return newModel;
     }
 }

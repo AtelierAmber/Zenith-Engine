@@ -90,9 +90,6 @@
     <ClInclude Include="Vertex.h">
       <Filter>Header Files\Scenes\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files\Scenes\Rendering\Models</Filter>
-    </ClInclude>
     <ClInclude Include="loadpng.h">
       <Filter>Header Files\Scenes\Rendering\Models</Filter>
     </ClInclude>
@@ -101,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="Camera3D.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives.h">
+      <Filter>Header Files\Scenes\Rendering\Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -149,5 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="TODO.txt" />
   </ItemGroup>
 </Project>

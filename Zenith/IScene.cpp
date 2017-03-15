@@ -26,6 +26,10 @@ namespace Zenith {
         return (m_game->getInputManager()->keyState(key) == state);
     }
 
+    const Mouse* IScene::getMouse() {
+        return &(m_game->getInputManager()->getMouse());
+    }
+
     void IScene::dispose() {
         m_renderer.dispose();
         m_game = nullptr;

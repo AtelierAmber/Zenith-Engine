@@ -8,7 +8,6 @@
 #include <unordered_map>
 
 namespace Zenith {
-    class Model;
 
     class Renderer {
     public:
@@ -31,9 +30,10 @@ namespace Zenith {
         /* Renders an entity object 
          * //TODO: Seperate into multiple render variants
          * Generates transformation matrix automatically */
-        void render(unsigned int shader, Model* model, float depth);
-        void render(unsigned int shader, Model* model, float depth, float x, float y, 
-            float z, float rotx, float roty, float rotz, float scale);
+        void render(unsigned int shader, Model* model);
+        void render(unsigned int shader, Model* model, Transform transform);
+        void render(unsigned int shader, Model* model, Transform transform, 
+            std::vector<Transform> objectTransforms);
 
         /* Finalizes all render() calls and stores them
          * in a single buffer to be rendered on screen */
@@ -45,18 +45,13 @@ namespace Zenith {
         void registerView(glm::mat4* matrix) { m_viewMatrix = matrix; }
 
     private:
-        glm::mat4 generateTransformMatrix(float x, float y, float z, float rotx,
-            float roty, float rotz, float scale) const {
-            generateTransformMatrix(glm::vec3(x, y, z), glm::vec3(rotx, roty, rotz), scale);
-        }
-        glm::mat4 generateTransformMatrix(glm::vec3 position, glm::vec3 rotation, float scale) const;
 
         /* Pointer to the camera matrix
          * Updates whenever the camera updates, it is a pointer after all */
         glm::mat4* m_viewMatrix;
         /* Use map to map shader index to vector of models to render */
         unsigned int m_currentShader = 0;
-        std::unordered_map<unsigned int, std::vector<DepthModel>> m_models;
+        std::unordered_map<unsigned int, std::vector<TransformedModel>> m_models;
 
         bool m_compiled = false;
         Logger m_logger;

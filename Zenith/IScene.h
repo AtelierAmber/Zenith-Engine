@@ -7,6 +7,7 @@
 
 namespace Zenith {
     class IGame;
+    struct Mouse;
 
     enum class SceneState {
         IDLE,
@@ -48,6 +49,7 @@ namespace Zenith {
         void setNext(unsigned int next) { m_nextScene = next; }
 
         bool keyStateIs(KeyID key /* Key::__ or Key::Modifier::__ */, KeyState state);
+        const Mouse* getMouse();
 
         Logger m_logger;
         DataLoader m_dataLoader;

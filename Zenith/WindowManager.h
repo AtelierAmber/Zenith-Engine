@@ -4,10 +4,12 @@
 
 namespace Zenith {
     enum WindowFlag {
-        INVISIBLE = 0x1,
-        FULLSCREEN = 0x2,
-        BORDERLESS = 0x4,
-        CENTERED = 0x8
+        INVISIBLE = 0b1,
+        FULLSCREEN = 0b10,
+        BORDERLESS = 0b100,
+        CENTERED = 0b1000,
+        CURSOR_HIDDEN = 0b10000,
+        CURSOR_TRAP = 0b100000
     };
 
     enum class WindowMessage {

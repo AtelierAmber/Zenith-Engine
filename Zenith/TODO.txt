@@ -1,0 +1,6 @@
+- Fix display scaling
+- Implement ECS
+- Implement uniform buffers
+- Fix lighting
+- Restructure scene system to allow for versitality.
+- Refactor Engine
