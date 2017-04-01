@@ -1,10 +1,9 @@
-#include <ecs/Manager.hpp>
-
-struct Position : public zen::ecs::Component {
-
-};
+#include "Game.hpp"
+#include "vld.h"
 
 int main(int argc, char** args) {
-    zen::ecs::Manager manager;
-    manager.addEntity<Position>();
+    Game game;
+    game.start("Gud gam", 0, 0, 1280, 720, 
+               zen::WindowFlag::CENTERED | zen::WindowFlag::RESIZABLE | zen::WindowFlag::VSYNC);
+    return 0;
 }

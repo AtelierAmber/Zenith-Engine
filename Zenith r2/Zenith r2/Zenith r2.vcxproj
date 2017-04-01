@@ -93,6 +93,10 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <DisableSpecificWarnings>4200;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -111,6 +115,10 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <DisableSpecificWarnings>4200;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -131,6 +139,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <DisableSpecificWarnings>4200;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,6 +165,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <DisableSpecificWarnings>4200;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,16 +185,28 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ecs\Entity.hpp" />
-    <ClInclude Include="src\ecs\Manager.hpp" />
-    <ClInclude Include="src\ecs\Component.hpp" />
+    <ClInclude Include="src\core\SceneController.hpp" />
+    <ClInclude Include="src\core\Timing.hpp" />
+    <ClInclude Include="src\interface\IScene.hpp" />
+    <ClInclude Include="src\interface\IGame.hpp" />
+    <ClInclude Include="src\core\Zenith.hpp" />
+    <ClInclude Include="src\ecs\ECSComponentPool.hpp" />
+    <ClInclude Include="src\ecs\ECS.hpp" />
+    <ClInclude Include="src\ecs\ECSEntity.hpp" />
+    <ClInclude Include="src\ecs\ECSController.hpp" />
     <ClInclude Include="src\debug\Logger.hpp" />
-    <ClInclude Include="src\ecs\System.hpp" />
+    <ClInclude Include="src\util\Maths.hpp" />
+    <ClInclude Include="src\util\ZVector.hpp" />
+    <ClInclude Include="src\core\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ecs\Manager.cpp" />
+    <ClCompile Include="src\core\SceneController.cpp" />
+    <ClCompile Include="src\core\Timing.cpp" />
+    <ClCompile Include="src\interface\IScene.cpp" />
+    <ClCompile Include="src\interface\IGame.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
-    <ClCompile Include="src\ecs\System.cpp" />
+    <ClCompile Include="src\ecs\ECSController.cpp" />
+    <ClCompile Include="src\core\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
