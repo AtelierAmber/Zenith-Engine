@@ -61,21 +61,31 @@ namespace zen {
             m_componentPools.clear();
             return;
         }
-        /* Delete entities */
-        for(std::size_t i = 0; i < m_eRemQueue.size(); ++i) {
-            unsigned int eHandle = m_eRemQueue[i];
-            m_entities.get<ECSEntity>(eHandle)->m_alive = false;
-            m_entities.remove(eHandle);
-        }
-        m_eRemQueue.clear();
 
-        struct KeyChange{
-            KeyChange(unsigned int handle, uint64 key) : 
+        struct KeyChange {
+            KeyChange(unsigned int handle, uint64 key) :
                 eHandle(handle), newKey(key) {}
             unsigned int eHandle;
             uint64 newKey;
         };
         std::vector<KeyChange> keyChanges;
+
+        /* Delete entities */
+        for(std::size_t i = 0; i < m_eRemQueue.size(); ++i) {
+            unsigned int eHandle = m_eRemQueue[i];
+            ECSEntity* e = m_entities.get<ECSEntity>(eHandle);
+            for(int i = 0; i < m_numComponents; ++i) {
+                uint64 id = 1 << (i + 1);
+                if((e->m_key & id) == id) {
+                    ECSComponentPool* pool = &m_componentPools[id];
+                    pool->remove(e->m_componentHandles[i]);
+                }
+            }
+            keyChanges.emplace_back(eHandle, 0);
+            m_entities.remove(eHandle);
+        }
+        m_eRemQueue.clear();
+
         /* Add and remove components */
         for(std::size_t i = 0, dataI = 0; i < m_eModQueue.size(); ++i) {
             EntityModifier* eMod = &m_eModQueue[i];

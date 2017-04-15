@@ -72,7 +72,7 @@ namespace zen {
     class ZSparse {
     public:
         ZSparse() {}
-        ZSparse(std::size_t dataSize) : m_dataSize(dataSize / sizeof(char)) {}
+        ZSparse(std::size_t dataSize) : m_dataSize(dataSize / sizeof(char)) { m_data.resize(1 * dataSize); }
 
         unsigned int size() { return m_numData; }
         void clear() {
@@ -92,28 +92,15 @@ namespace zen {
             unsigned int index;
             if(m_freeData.size() != 0) {
                 index = m_freeData.back();
-                *(reinterpret_cast<T*>(&m_data[index*m_dataSize])) = t;
                 m_freeData.pop_back();
             } else {
-                char* dataPtr = (char*)&t;
-                m_data.insert(m_data.end(), dataPtr, dataPtr + m_dataSize);
+                if(((m_numData*m_dataSize) + m_dataSize) > m_data.capacity()) {
+                    m_data.resize(((m_data.capacity() / m_dataSize) * 2) * m_dataSize);
+                }
                 index = (unsigned int)(m_data.size() / m_dataSize) - 1;
             }
-            ++m_numData;
-            return index;
-        }
-
-        /* Unfriendly! Use templated add!*/
-        unsigned int addPtr(void* data) {
-            unsigned int index;
-            if(m_freeData.size() != 0) {
-                index = m_freeData.back();
-                std::memcpy(&m_data[index*m_dataSize], data, sizeof(char)*m_dataSize);
-                m_freeData.pop_back();
-            } else {
-                m_data.insert(m_data.end(), reinterpret_cast<char*>(data), reinterpret_cast<char*>(data) + m_dataSize);
-                index = (unsigned int)(m_data.size() / m_dataSize) - 1;
-            }
+            T* data = new(&m_data[index*m_dataSize]) T;
+            *data = t;
             ++m_numData;
             return index;
         }
@@ -166,13 +153,15 @@ namespace zen {
             unsigned int index;
             if(m_freeData.size() != 0) {
                 index = m_freeData.back();
-                *(reinterpret_cast<T*>(&m_data[index*m_dataSize])) = t;
                 m_freeData.pop_back();
             } else {
-                char* dataPtr = (char*)&t;
-                m_data.insert(m_data.end(), dataPtr, dataPtr + m_dataSize);
+                if(((m_numData*m_dataSize) + m_dataSize) > m_data.capacity()) {
+                    m_data.resize(((m_data.capacity() / m_dataSize) * 2) * m_dataSize);
+                }
                 index = (unsigned int)(m_data.size() / m_dataSize) - 1;
             }
+            T* data = new(&m_data[index*m_dataSize]) T;
+            *data = t;
             ++m_numData;
             return index;
         }

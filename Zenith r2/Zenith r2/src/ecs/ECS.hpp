@@ -1,25 +1,25 @@
 #include "ECSController.hpp"
 
 namespace zen {
-    template <typename T, typename... Ts> 
+    template <typename T, typename... Ts>
     struct ManagerInit {
         static void construct(ECSController* controller) {
             controller->registerComponent((std::is_empty<T>::value == true) ? 0 : sizeof(T));
             ManagerInit<Ts...>::construct(controller);
         }
     };
-    template <typename T> 
+    template <typename T>
     struct ManagerInit<T> {
         static void construct(ECSController* controller) {
             controller->registerComponent((std::is_empty<T>::value == true) ? 0 : sizeof(T));
         }
     };
 
-    template <int I, typename T, typename S, typename... Ts> 
+    template <int I, typename T, typename S, typename... Ts>
     struct GetComponentID {
         constexpr static uint64 value = GetComponentID<I + 1, T, Ts...>::value;
     };
-    template <int I, typename T, typename... Ts> 
+    template <int I, typename T, typename... Ts>
     struct GetComponentID<I, T, T, Ts...> {
         constexpr static uint64 value = 1ULL << I;
     };
@@ -28,14 +28,14 @@ namespace zen {
     class ECSCore {
     public:
         ECSCore() {
-            controller = new ECSController;
-            ManagerInit<Cs...>::construct(controller);
-            controller->finalize();
+            m_controller = new ECSController;
+            ManagerInit<Cs...>::construct(m_controller);
+            m_controller->finalize();
         }
 
         ~ECSCore() {
-            controller->dispose();
-            delete controller;
+            m_controller->dispose();
+            delete m_controller;
         }
 
         template<typename C>
@@ -46,46 +46,63 @@ namespace zen {
         void addSystem(std::function<void(unsigned int, uint8_t)> insertion,
                        std::function<void(unsigned int, uint8_t)> removal,
                        uint64 key, const char* name = "<No name specified>") {
-            controller->registerSystem(insertion, removal, key, name);
+            m_controller->registerSystem(insertion, removal, key, name);
         }
 
         unsigned int createEntity(uint8_t type = 0) {
-            return controller->createEntity(type);
+            return m_controller->createEntity(type);
         }
 
         template<typename... Ts>
         unsigned int createEntity(uint8_t type = 0) {
             unsigned int handle;
-            handle = controller->createEntity(type);
-            AddComponents<Ts...>::To(controller, handle);
+            handle = m_controller->createEntity(type);
+            AddComponents<Ts...>::To(m_controller, handle);
         }
 
         void removeEntity(unsigned int entityHandle) {
-            controller->removeEntity(entityHandle);
+            m_controller->removeEntity(entityHandle);
+        }
+        void removeEntity(ECSEntity* entity) {
+            m_controller->removeEntity(entity->m_handle);
         }
 
         template<typename... Ts>
         void addComponentsTo(unsigned int entityHandle) {
-            AddComponents<Ts...>::To(controller, entityHandle);
+            AddComponents<Ts...>::To(m_controller, entityHandle);
+        }
+        template<typename... Ts>
+        void addComponentsTo(ECSEntity* entity) {
+            AddComponents<Ts...>::To(m_controller, entity->m_handle);
         }
 
         template<typename... Ts>
         void removeComponentsFrom(unsigned int entityHandle) {
-            RemComponents<Ts...>::From(controller, entityHandle);
+            RemComponents<Ts...>::From(m_controller, entityHandle);
+        }
+        template<typename... Ts>
+        void removeComponentsFrom(ECSEntity* entity) {
+            RemComponents<Ts...>::From(m_controller, entity->m_handle);
         }
 
         ECSEntity* getEntity(unsigned int entityHandle) {
-            return controller->getEntity(entityHandle);
+            return m_controller->getEntity(entityHandle);
         }
 
         template<typename C>
         C* getComponentFrom(unsigned int entityHandle) {
-            return controller->getComponentFrom<C>(entityHandle, getComponentID<C>());
+            return m_controller->getComponentFrom<C>(entityHandle, getComponentID<C>());
+        }
+        template<typename C>
+        C* getComponentFrom(ECSEntity* entity) {
+            return m_controller->getComponentFrom<C>(entity->m_handle, getComponentID<C>());
         }
 
-        void update() {
-            controller->update();
+        void refresh() {
+            m_controller->update();
         }
+
+        ECSController* getContext() { return m_controller; }
 
     private:
         template <typename C, typename... Is>
@@ -125,6 +142,6 @@ namespace zen {
             constexpr static int value = (GetComponentID<0, C, Cs...>::value);
         };
 
-        ECSController* controller = nullptr;
+        ECSController* m_controller = nullptr;
     };
 }
