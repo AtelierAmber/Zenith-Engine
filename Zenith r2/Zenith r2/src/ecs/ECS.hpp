@@ -76,6 +76,15 @@ namespace zen {
             AddComponents<Ts...>::To(m_controller, entity->m_handle);
         }
 
+        template<typename C>
+        void addComponentDataTo(unsigned int entityHandle, C c) {
+            m_controller->addComponentTo(entityHandle, getComponentID<C>(), c);
+        }
+        template<typename C>
+        void addComponentDataTo(ECSEntity* entity, C c) {
+            m_controller->addComponentTo(entity, getComponentID<C>(), c);
+        }
+
         template<typename... Ts>
         void removeComponentsFrom(unsigned int entityHandle) {
             RemComponents<Ts...>::From(m_controller, entityHandle);

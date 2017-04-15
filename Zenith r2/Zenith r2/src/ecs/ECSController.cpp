@@ -21,9 +21,9 @@ namespace zen {
         return key;
     }
 
-    void ECSController::registerSystem(std::function<void(unsigned int, uint8_t)> insertion, 
-                                 std::function<void(unsigned int, uint8_t)> removal, 
-                                 uint64 key, const char* name /*= "<No name specified>"*/) {
+    void ECSController::registerSystem(std::function<void(EntityHandle, EntityType)> insertion, 
+                                       std::function<void(EntityHandle, EntityType)> removal, 
+                                       uint64 key, const char* name /*= "<No name specified>"*/) {
         m_systems.emplace_back(key, insertion, removal);
         Log::Debug({LogMajorType::EVENT, "ecs"}, "Registered system ", name, " [", key, "");
     }
