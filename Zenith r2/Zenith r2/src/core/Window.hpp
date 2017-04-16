@@ -12,7 +12,8 @@ namespace zen {
         CENTERED = 0b10000,
         VSYNC = 0b100000,
         CURSOR_HIDDEN = 0b1000000,
-        CURSOR_TRAP = 0b10000000
+        CURSOR_TRAP = 0b10000000,
+        WINDOW_DEFAULT = 0b00111000
     };
 
     class Window {

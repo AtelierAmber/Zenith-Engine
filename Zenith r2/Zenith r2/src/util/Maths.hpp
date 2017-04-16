@@ -13,6 +13,8 @@ namespace zenmath{
         return (a > b) ? a : b;
     }
 
+    int abs(int val) { return (val < 0)? -val : val; }
+
     /* Loss of precision but very fast */
     float Qsqrt(float val) {
         int tmp = *(int *)&val;
