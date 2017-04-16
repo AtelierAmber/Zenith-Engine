@@ -1,6 +1,8 @@
 #include "debug/Logger.hpp"
 #include <ctime>
 
+int abs(int val) { return (val < 0)? -val : val; }
+
 namespace zen {
     std::vector<unsigned int> Log::sm_codeRecord;
     LogSettings Log::sm_settings = LogSetting::ALL;
@@ -29,6 +31,8 @@ namespace zen {
         std::time_t tNow = std::time(0);
         std::tm now;
         localtime_s(&now, &tNow);
+        std::tm utc;
+        gmtime_s(&utc, &tNow);
         if (showDate) {
             file << "[";
             if (now.tm_mon < 9) {
@@ -46,6 +50,18 @@ namespace zen {
             file << "/" << 1900 + now.tm_year << " - ";
         }
         if (showTime) {
+            int timedif = (now.tm_hour - utc.tm_hour);
+            if(abs(timedif) >= 12) {
+                timedif = 0;
+                if(now.tm_hour > utc.tm_hour) {
+                    timedif += 24 - now.tm_hour;
+                    timedif += utc.tm_hour;
+                } else {
+                    timedif += 24 - utc.tm_hour;
+                    timedif += now.tm_hour;
+                }
+            }
+            file << "<GMT " << (now.tm_hour - utc.tm_hour)-25 << ">";
             if (now.tm_hour < 10) {
                 file << "0" << now.tm_hour;
             }
@@ -99,16 +115,17 @@ namespace zen {
         Log::sm_codeRecord.clear();
     }
 
-    void Log::DateTime(){
+    void Log::DateTime(bool Inline) {
         std::fstream file;
         file.open(Log::sm_logFile, std::ios::out | std::ios::app);
         if (file.fail()) {
             std::printf("COULD NOT OPEN LOG FILE! Are all required directories created? %s", Log::sm_logFile);
             return;
         }
-        file << "\nDate: ";
+        if(!Inline) {
+            file << "\nDate: ";
+        }
         exportDate(file, true, true);
         file.close();
     }
-
 }

@@ -180,14 +180,14 @@ namespace zen {
          */
         static void refreshRepetitives();
 
-        /*! \brief Date.
+        /*! \brief DateTime.
          *  
          *  Logs the current Date 
          *  \public 
          *  \static 
          *  \retval void
          */
-        static void DateTime();
+        static void DateTime(bool Inline = false);
 
     private:
 
