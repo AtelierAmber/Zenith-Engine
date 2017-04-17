@@ -185,10 +185,15 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\SceneController.hpp" />
+    <ClInclude Include="src\rendering\ShaderProgram.hpp" />
+    <ClInclude Include="src\rendering\DesignRenderer.hpp" />
+    <ClInclude Include="src\rendering\MasterRenderer.hpp" />
+    <ClInclude Include="src\rendering\ModelRenderer.hpp" />
+    <ClInclude Include="src\rendering\PrimitiveRenderer.hpp" />
+    <ClInclude Include="src\scenes\IScene.hpp" />
+    <ClInclude Include="src\scenes\IEngine.hpp" />
+    <ClInclude Include="src\rendering\ShaderUniform.hpp" />
     <ClInclude Include="src\core\Timing.hpp" />
-    <ClInclude Include="src\interface\IScene.hpp" />
-    <ClInclude Include="src\interface\IGame.hpp" />
     <ClInclude Include="src\core\Zenith.hpp" />
     <ClInclude Include="src\ecs\ECSComponentPool.hpp" />
     <ClInclude Include="src\ecs\ECS.hpp" />
@@ -200,10 +205,14 @@
     <ClInclude Include="src\core\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\SceneController.cpp" />
+    <ClCompile Include="src\rendering\ShaderProgram.cpp" />
+    <ClCompile Include="src\rendering\DesignRenderer.cpp" />
+    <ClCompile Include="src\rendering\MasterRenderer.cpp" />
+    <ClCompile Include="src\rendering\ModelRenderer.cpp" />
+    <ClCompile Include="src\rendering\PrimitiveRenderer.cpp" />
+    <ClCompile Include="src\rendering\Rendering" />
+    <ClCompile Include="src\scenes\IEngine.cpp" />
     <ClCompile Include="src\core\Timing.cpp" />
-    <ClCompile Include="src\interface\IScene.cpp" />
-    <ClCompile Include="src\interface\IGame.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\ecs\ECSController.cpp" />
     <ClCompile Include="src\core\Window.cpp" />
