@@ -105,6 +105,11 @@ namespace zen {
             return index;
         }
 
+        unsigned int addPtr(void* data) {
+            m_data.insert(m_data.end(), reinterpret_cast<char*>(data), reinterpret_cast<char*>(data) + m_dataSize);
+            return (unsigned int)(m_data.size() / m_dataSize) - 1;
+        }
+
         void remove(unsigned int i) {
             if(i > (m_data.size() / m_dataSize)) { return; }
             m_freeData.emplace_back(i);

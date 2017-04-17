@@ -30,7 +30,7 @@ namespace zen {
         void center();
         void sync(bool enable);
 
-        int update();
+        int swap();
         void close();
 
         bool isSynced() const { return m_vsync; }

@@ -1,7 +1,7 @@
 #include "debug/Logger.hpp"
 #include <ctime>
 
-int abs(int val) { return (val < 0)? -val : val; }
+int absolute(int val) { return (val < 0)? -val : val; }
 
 namespace zen {
     std::vector<unsigned int> Log::sm_codeRecord;
@@ -51,7 +51,7 @@ namespace zen {
         }
         if (showTime) {
             int timedif = (now.tm_hour - utc.tm_hour);
-            if(abs(timedif) >= 12) {
+            if(absolute(timedif) >= 12) {
                 timedif = 0;
                 if(now.tm_hour > utc.tm_hour) {
                     timedif += 24 - now.tm_hour;
@@ -61,7 +61,7 @@ namespace zen {
                     timedif += now.tm_hour;
                 }
             }
-            file << "<GMT " << (now.tm_hour - utc.tm_hour)-25 << ">";
+            file << "<GMT" << timedif << ">";
             if (now.tm_hour < 10) {
                 file << "0" << now.tm_hour;
             }
@@ -102,7 +102,7 @@ namespace zen {
 
     unsigned int Log::NextCode() {
         unsigned int lowest = 0;
-        for (int i = 0; i < Log::sm_codeRecord.size(); ++i) {
+        for (unsigned int i = 0; i < (unsigned int)Log::sm_codeRecord.size(); ++i) {
             if (lowest == Log::sm_codeRecord[i]) {
                 i = 0;
                 ++lowest;

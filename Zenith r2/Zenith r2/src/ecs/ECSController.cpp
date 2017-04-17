@@ -74,10 +74,10 @@ namespace zen {
         for(std::size_t i = 0; i < m_eRemQueue.size(); ++i) {
             unsigned int eHandle = m_eRemQueue[i];
             ECSEntity* e = m_entities.get<ECSEntity>(eHandle);
-            for(int i = 0; i < m_numComponents; ++i) {
-                uint64 id = 1 << (i + 1);
+            for(unsigned int i = 0; i < m_numComponents; ++i) {
+                uint64 id = 1ULL << (i + 1);
                 if((e->m_key & id) == id) {
-                    ECSComponentPool* pool = &m_componentPools[id];
+                    ECSComponentPool* pool = &m_componentPools[idtoind(id)];
                     pool->remove(e->m_componentHandles[i]);
                 }
             }

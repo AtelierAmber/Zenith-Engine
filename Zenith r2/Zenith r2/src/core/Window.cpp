@@ -186,7 +186,7 @@ namespace zen {
         }
     }
 
-    int Window::update() {
+    int Window::swap() {
         SDL_GL_SwapWindow(m_window);
         return 0;
     }

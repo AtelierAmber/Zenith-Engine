@@ -16,6 +16,7 @@ namespace zen {
 
         // Sets the desired max FPS
         void setMaxFPS(float maxFPS);
+        float getMaxFPS() { return m_maxFPS; }
 
         void begin();
 
